@@ -19,6 +19,7 @@
 import React, { useState } from "react";
 // Chakra imports
 import {
+  
   Box,
   Flex,
   Button,
@@ -39,6 +40,7 @@ import signInImage from "assets/img/signInImage.png";
 // Custom Components
 import AuthFooter from "components/Footer/AuthFooter";
 import GradientBorder from "components/GradientBorder/GradientBorder";
+import Axios from "Config/Axios/Axios";
 
 function SignIn() {
   const titleColor = "white";
@@ -50,7 +52,7 @@ function SignIn() {
   })
 
   const sumbit = async () => {
-    const res = await Axios.post("/iiot-signup",userdetails)
+    const res = await Axios.post("/iiot-signin",userdetails)
     console.log(res)
   }
 
