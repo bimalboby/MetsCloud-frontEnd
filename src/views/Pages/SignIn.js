@@ -16,7 +16,7 @@
 
 */
 
-import React from "react";
+import React, { useState } from "react";
 // Chakra imports
 import {
   Box,
@@ -30,6 +30,7 @@ import {
   Switch,
   Text,
   DarkMode,
+  Select,
 } from "@chakra-ui/react";
 
 // Assets
@@ -42,6 +43,16 @@ import GradientBorder from "components/GradientBorder/GradientBorder";
 function SignIn() {
   const titleColor = "white";
   const textColor = "gray.400";
+  const [userdetails, setuserdetails] = useState({
+    email:"",
+    password:"",
+    designation:""
+  })
+
+  const sumbit = async () => {
+    const res = await Axios.post("/iiot-signup",userdetails)
+    console.log(res)
+  }
 
   return (
     <Flex position='relative'>
@@ -92,6 +103,11 @@ function SignIn() {
                 w={{ base: "100%", lg: "fit-content" }}
                 borderRadius='20px'>
                 <Input
+                value={userdetails.email}
+                onChange={(e)=>setuserdetails(pre=>({
+                  ...pre,
+                  email:e.target.value
+                }))}
                   color='white'
                   bg='rgb(19,21,54)'
                   border='transparent'
@@ -118,6 +134,11 @@ function SignIn() {
                 w={{ base: "100%", lg: "fit-content" }}
                 borderRadius='20px'>
                 <Input
+                value={userdetails.password}
+                onChange={(e)=>setuserdetails(pre=>({
+                  ...pre,
+                  password:e.target.value
+                }))}
                   color='white'
                   bg='rgb(19,21,54)'
                   border='transparent'
@@ -131,7 +152,44 @@ function SignIn() {
                 />
               </GradientBorder>
             </FormControl>
-            
+            <FormControl>
+                  <FormLabel
+                    color={titleColor}
+                    ms='4px'
+                    fontSize='sm'
+                    fontWeight='normal'>
+                    Designation
+                  </FormLabel>
+                  <GradientBorder
+                    mb='24px'
+                    h='50px'
+                    w={{ base: "100%", lg: "fit-content" }}
+                    borderRadius='20px'>
+                    <Select
+                      color={titleColor}
+                      bg={{
+                        base: "rgb(19,21,54)",
+                      }}
+                      value={userdetails.designation}
+                    onChange={(e)=>setuserdetails(pre=>({
+                      ...pre,
+                      designation:e.target.value
+                    }))}
+                      placeholder='Select option'
+                      border='transparent'
+                      borderRadius='20px'
+                      fontSize='sm'
+                      size='lg'
+                      w={{ base: "100%", md: "346px" }}
+                      maxW='100%'
+                      h='46px'>
+                      <option value='option1'>Business Owner</option>
+                      <option value='option1'>Project manager</option>
+                      <option value='option2'>Supervisor</option>
+                    </Select>
+
+                  </GradientBorder>
+                </FormControl>
             <FormControl display='flex' alignItems='center'>
               <DarkMode>
                 <Switch id='remember-login' colorScheme='brand' me='10px' />
@@ -146,6 +204,7 @@ function SignIn() {
               </FormLabel>
             </FormControl>
             <Button
+            onClick={()=>sumbit()}
               variant='brand'
               fontSize='10px'
               type='submit'
