@@ -1,4 +1,4 @@
-import bgBody from "assets/img/background-body-admin.png";
+import bgBody from "assets/img/background-boady-admin.png";
 
 export const bgAdmin = {
   styles: {
@@ -6,6 +6,7 @@ export const bgAdmin = {
       body: {
         bgImage: bgBody,
         bgSize: "cover",
+        bgRepeat:"none",
         bgPosition: "center center",
       },
     }),
