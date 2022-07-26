@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useContext } from "react";
 
 // Chakra imports
 import {
@@ -79,79 +79,91 @@ import {
   lineChartOptionsDashboard,
 } from "variables/charts";
 import { dashboardTableData, timelineData } from "variables/general";
+import { usercontext } from "Hooks/Authcontext/Authcontext";
 
 export default function Dashboard() {
+  const { userdetails } = useContext(usercontext)
+
+
   return (
     <Flex flexDirection='column' pt={{ base: "120px", md: "75px" }}>
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
         {/* MiniStatistics Card */}
-        <Card>
-          <CardBody>
-            <Flex flexDirection='row' align='center' justify='center' w='100%'>
-              <Stat me='auto'>
-                <StatLabel
-                  fontSize='sm'
-                  color='gray.400'
-                  fontWeight='bold'
-                  pb='2px'>
-                  Today's Money
-                </StatLabel>
-                <Flex>
-                  <StatNumber fontSize='lg' color='#fff'>
-                    $53,000
-                  </StatNumber>
-                  <StatHelpText
-                    alignSelf='flex-end'
-                    justifySelf='flex-end'
-                    m='0px'
-                    color='green.400'
-                    fontWeight='bold'
-                    ps='3px'
-                    fontSize='md'>
-                    +55%
-                  </StatHelpText>
+        {
+          userdetails.designation == "bo" && (
+            <Card>
+              <CardBody>
+                <Flex flexDirection='row' align='center' justify='center' w='100%'>
+                  <Stat me='auto'>
+                    <StatLabel
+                      fontSize='sm'
+                      color='gray.400'
+                      fontWeight='bold'
+                      pb='2px'>
+                      Project Manager
+                    </StatLabel>
+                    <Flex>
+                      <StatNumber fontSize='lg' color='#fff'>
+                        {userdetails.noOfPm}
+                      </StatNumber>
+                      <StatHelpText
+                        alignSelf='flex-end'
+                        justifySelf='flex-end'
+                        m='0px'
+                        color={userdetails.pmImprovement < 0 ? 'red.500' : 'green.400'}
+                        fontWeight='bold'
+                        ps='3px'
+                        fontSize='md'>
+                        {(userdetails.pmImprovement) < 0 ? `${userdetails.pmImprovement}` : `+${userdetails.pmImprovement}`}%
+                      </StatHelpText>
+                    </Flex>
+                  </Stat>
+                  <IconBox as='box' h={"45px"} w={"45px"} bg='brand.200'>
+                    <WalletIcon h={"24px"} w={"24px"} color='#fff' />
+                  </IconBox>
                 </Flex>
-              </Stat>
-              <IconBox as='box' h={"45px"} w={"45px"} bg='brand.200'>
-                <WalletIcon h={"24px"} w={"24px"} color='#fff' />
-              </IconBox>
-            </Flex>
-          </CardBody>
-        </Card>
+              </CardBody>
+            </Card>
+          )
+        }
+
         {/* MiniStatistics Card */}
-        <Card minH='83px'>
-          <CardBody>
-            <Flex flexDirection='row' align='center' justify='center' w='100%'>
-              <Stat me='auto'>
-                <StatLabel
-                  fontSize='sm'
-                  color='gray.400'
-                  fontWeight='bold'
-                  pb='2px'>
-                  Today's Users
-                </StatLabel>
-                <Flex>
-                  <StatNumber fontSize='lg' color='#fff'>
-                    2,300
-                  </StatNumber>
-                  <StatHelpText
-                    alignSelf='flex-end'
-                    justifySelf='flex-end'
-                    m='0px'
-                    color='green.400'
-                    fontWeight='bold'
-                    ps='3px'
-                    fontSize='md'>
-                    +5%
-                  </StatHelpText>
+        {
+          (userdetails.designation == "bo" || userdetails.designation == "pm") && (
+            <Card minH='83px'>
+              <CardBody>
+                <Flex flexDirection='row' align='center' justify='center' w='100%'>
+                  <Stat me='auto'>
+                    <StatLabel
+                      fontSize='sm'
+                      color='gray.400'
+                      fontWeight='bold'
+                      pb='2px'>
+                      Supervisors
+                    </StatLabel>
+                    <Flex>
+                      <StatNumber fontSize='lg' color='#fff'>
+                        {userdetails.noOfSv}
+                      </StatNumber>
+                      <StatHelpText
+                        alignSelf='flex-end'
+                        justifySelf='flex-end'
+                        m='0px'
+                        color={userdetails.svImprovement < 0 ? 'red.500' : 'green.400'}
+                        fontWeight='bold'
+                        ps='3px'
+                        fontSize='md'>
+                        {(userdetails.svImprovement) < 0 ? `${userdetails.svImprovement}` : `+${userdetails.svImprovement}`}%
+                      </StatHelpText>
+                    </Flex>
+                  </Stat>
+                  <IconBox as='box' h={"45px"} w={"45px"} bg='brand.200'>
+                    <GlobeIcon h={"24px"} w={"24px"} color='#fff' />
+                  </IconBox>
                 </Flex>
-              </Stat>
-              <IconBox as='box' h={"45px"} w={"45px"} bg='brand.200'>
-                <GlobeIcon h={"24px"} w={"24px"} color='#fff' />
-              </IconBox>
-            </Flex>
-          </CardBody>
-        </Card>
+              </CardBody>
+            </Card>
+          )}
         {/* MiniStatistics Card */}
         <Card>
           <CardBody>
@@ -162,21 +174,21 @@ export default function Dashboard() {
                   color='gray.400'
                   fontWeight='bold'
                   pb='2px'>
-                  New Clients
+                  Devices
                 </StatLabel>
                 <Flex>
                   <StatNumber fontSize='lg' color='#fff'>
-                    +3,020
+                    {userdetails.devices}
                   </StatNumber>
                   <StatHelpText
                     alignSelf='flex-end'
                     justifySelf='flex-end'
                     m='0px'
-                    color='red.500'
+                    color={userdetails.deviceImprovement < 0 ? 'red.500' : 'green.400'}
                     fontWeight='bold'
                     ps='3px'
                     fontSize='md'>
-                    -14%
+                    {(userdetails.deviceImprovement) < 0 ? `${userdetails.deviceImprovement}` : `+${userdetails.deviceImprovement}`}%
                   </StatHelpText>
                 </Flex>
               </Stat>
@@ -188,7 +200,7 @@ export default function Dashboard() {
           </CardBody>
         </Card>
         {/* MiniStatistics Card */}
-        <Card>
+        {/* <Card>
           <CardBody>
             <Flex flexDirection='row' align='center' justify='center' w='100%'>
               <Stat me='auto'>
@@ -220,7 +232,7 @@ export default function Dashboard() {
               </IconBox>
             </Flex>
           </CardBody>
-        </Card>
+        </Card> */}
       </SimpleGrid>
       <Grid
         templateColumns={{ sm: "1fr", md: "1fr 1fr", "2xl": "2fr 1.2fr 1.5fr" }}
@@ -245,17 +257,18 @@ export default function Dashboard() {
                   Welcome back,
                 </Text>
                 <Text fontSize='28px' color='#fff' fontWeight='bold' mb='18px'>
-                  Mark Johnson
+                  {userdetails.userName}
                 </Text>
                 <Text
                   fontSize='md'
                   color='gray.400'
                   fontWeight='normal'
                   mb='auto'>
-                  Glad to see you again! <br />
-                  Ask me anything.
+                  {userdetails.design}
+                   <br />
+                  {userdetails.organization}
                 </Text>
-                <Spacer />
+                {/* <Spacer />
                 <Flex align='center'>
                   <Button
                     p='0px'
@@ -285,13 +298,13 @@ export default function Dashboard() {
                       _hover={{ transform: "translateX(20%)" }}
                     />
                   </Button>
-                </Flex>
+                </Flex> */}
               </Flex>
             </Flex>
           </CardBody>
         </Card>
         {/* Satisfaction Rate */}
-        <Card gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }}>
+        {/* <Card gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }}>
           <CardHeader mb='24px'>
             <Flex direction='column'>
               <Text color='#fff' fontSize='lg' fontWeight='bold' mb='4px'>
@@ -355,9 +368,9 @@ export default function Dashboard() {
               </Text>
             </Stack>
           </Flex>
-        </Card>
+        </Card> */}
         {/* Referral Tracking */}
-        <Card gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }}>
+        {/* <Card gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }}>
           <Flex direction='column'>
             <Flex justify='space-between' align='center' mb='40px'>
               <Text color='#fff' fontSize='lg' fontWeight='bold'>
@@ -416,8 +429,8 @@ export default function Dashboard() {
                     window.innerWidth >= 1024
                       ? 200
                       : window.innerWidth >= 768
-                      ? 170
-                      : 200
+                        ? 170
+                        : 200
                   }
                   isGradient
                   gradient={{
@@ -445,7 +458,7 @@ export default function Dashboard() {
               </Box>
             </Flex>
           </Flex>
-        </Card>
+        </Card> */}
       </Grid>
       <Grid
         templateColumns={{ sm: "1fr", lg: "1.7fr 1.3fr" }}

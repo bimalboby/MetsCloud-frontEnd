@@ -52,9 +52,9 @@ function TablesTableRow(props) {
         borderBottomColor='#56577A'>
         <Flex align='center' py='.8rem' minWidth='100%' flexWrap='nowrap'>
           <Avatar
-            src={logo}
+            src={`avatar${logo}.png`}
             w='50px'
-            borderRadius='12px'
+            borderRadius='50px'
             me='18px'
             border='none'
           />
@@ -73,7 +73,7 @@ function TablesTableRow(props) {
         </Flex>
       </Td>
 
-      <Td
+      {/* <Td
         border={lastItem ? "none" : null}
         borderBottomColor='#56577A'
         minW='150px'>
@@ -85,7 +85,7 @@ function TablesTableRow(props) {
             {subdomain}
           </Text>
         </Flex>
-      </Td>
+      </Td> */}
       <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
         <Badge
           bg={status === "Online" ? "green.400" : "transparent"}
@@ -98,11 +98,11 @@ function TablesTableRow(props) {
           {status}
         </Badge>
       </Td>
-      <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
+      {/* <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
         <Text fontSize='sm' color='#fff' fontWeight='normal'>
           {date}
         </Text>
-      </Td>
+      </Td> */}
       <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
         <Button p='0px' bg='transparent' variant='no-hover'>
           <Text
@@ -110,7 +110,7 @@ function TablesTableRow(props) {
             color='gray.400'
             fontWeight='bold'
             cursor='pointer'>
-            Edit
+            View
           </Text>
         </Button>
       </Td>

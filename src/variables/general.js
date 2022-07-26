@@ -196,7 +196,7 @@ export const rtlTimelineData = [
 
 export const tablesTableData = [
   {
-    logo: avatar1,
+    logo: "avatar1",
     name: "Esthera Jackson",
     email: "alexa@simmmple.com",
     subdomain: "Manager",
@@ -205,7 +205,7 @@ export const tablesTableData = [
     date: "14/06/21",
   },
   {
-    logo: avatar2,
+    logo: "avatar2",
     name: "Alexa Liras",
     email: "laurent@simmmple.com",
     subdomain: "Programmer",
@@ -214,7 +214,7 @@ export const tablesTableData = [
     date: "12/05/21",
   },
   {
-    logo: avatar3,
+    logo: "avatar3",
     name: "Laurent Michael",
     email: "laurent@simmmple.com",
     subdomain: "Executive",
@@ -223,7 +223,7 @@ export const tablesTableData = [
     date: "07/06/21",
   },
   {
-    logo: avatar4,
+    logo: "avatar4",
     name: "Freduardo Hill",
     email: "freduardo@simmmple.com",
     subdomain: "Manager",
@@ -241,7 +241,7 @@ export const tablesTableData = [
     date: "21/01/21",
   },
   {
-    logo: avatar7,
+    logo: avatar3,
     name: "Mark Wilson",
     email: "mark@simmmple.com",
     subdomain: "Designer",

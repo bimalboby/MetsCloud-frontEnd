@@ -16,7 +16,7 @@
 
 */
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // Chakra imports
 import {
   
@@ -41,8 +41,12 @@ import signInImage from "assets/img/signInImage.png";
 import AuthFooter from "components/Footer/AuthFooter";
 import GradientBorder from "components/GradientBorder/GradientBorder";
 import Axios from "Config/Axios/Axios";
+import { useHistory, useLocation } from "react-router-dom";
+import { usercontext } from "Hooks/Authcontext/Authcontext";
 
 function SignIn() {
+  const {setIsLoggedIn} = useContext(usercontext)
+  let loc = useHistory()
   const titleColor = "white";
   const textColor = "gray.400";
   const [userdetails, setuserdetails] = useState({
@@ -54,6 +58,11 @@ function SignIn() {
   const sumbit = async () => {
     const res = await Axios.post("/iiot-signin",userdetails)
     console.log(res)
+    setIsLoggedIn(res.data.isLoggedIn)
+
+    if(res.data.isLoggedIn){
+      loc.replace({ pathname: '/admin/dashboard'})
+    }
   }
 
   return (

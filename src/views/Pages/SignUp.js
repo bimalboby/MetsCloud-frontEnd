@@ -43,10 +43,12 @@ import GradientBorder from "components/GradientBorder/GradientBorder";
 // Assets
 import signUpImage from "assets/img/signUpImage.png";
 import Axios from "Config/Axios/Axios";
+import { useHistory } from "react-router-dom";
 
 function SignUp() {
   const titleColor = "white";
   const textColor = "gray.400";
+  let loc = useHistory()
   const [userdetails, setuserdetails] = useState({
     dname:"",
     email:"",
@@ -57,8 +59,12 @@ function SignUp() {
     designation:""
   })
 
-  const sumbit = () => {
-    Axios.post("/iiotAdd-employee",userdetails)
+  const sumbit = async() => {
+    const res = await Axios.post("/iiotAdd-employee",userdetails)
+    console.log(res)
+    if(res.data.isSignedUp){
+      loc.replace({ pathname: '/signin'})
+    }
   }
 
   return (
