@@ -40,7 +40,6 @@ import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 // Custom Components
 import AuthFooter from "components/Footer/AuthFooter";
 import GradientBorder from "components/GradientBorder/GradientBorder";
-imoprt
 // Assets
 import signUpImage from "assets/img/signUpImage.png";
 import Axios from "Config/Axios/Axios";
