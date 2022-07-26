@@ -16,7 +16,7 @@
 
 */
 
-import React from "react";
+import React, { useState } from "react";
 
 // Chakra imports
 import {
@@ -32,6 +32,7 @@ import {
   Text,
   Icon,
   DarkMode,
+  Select
 } from "@chakra-ui/react";
 
 // Icons
@@ -39,13 +40,27 @@ import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 // Custom Components
 import AuthFooter from "components/Footer/AuthFooter";
 import GradientBorder from "components/GradientBorder/GradientBorder";
-
+imoprt
 // Assets
 import signUpImage from "assets/img/signUpImage.png";
+import Axios from "Config/Axios/Axios";
 
 function SignUp() {
   const titleColor = "white";
   const textColor = "gray.400";
+  const [userdetails, setuserdetails] = useState({
+    dname:"",
+    email:"",
+    password:"",
+    publicid:"",
+    phno:"",
+    token:"",
+    designation:""
+  })
+
+  const sumbit = () => {
+    Axios.post("/iiotAdd-employee",userdetails)
+  }
 
   return (
     <Flex position='relative' overflow={{ lg: "hidden" }}>
@@ -81,7 +96,7 @@ function SignUp() {
               fontWeight='bold'>
               Welcome!
             </Text>
-            <Text
+            {/* <Text
               fontSize='md'
               color='white'
               fontWeight='normal'
@@ -89,7 +104,7 @@ function SignUp() {
               w={{ base: "100%", md: "90%", lg: "90%", xl: "80%" }}>
               Use these awesome forms to login or create new account in your
               project for free.
-            </Text>
+            </Text> */}
           </Flex>
           <GradientBorder p='2px' me={{ base: "none", lg: "30px", xl: "none" }}>
             <Flex
@@ -206,6 +221,7 @@ function SignUp() {
                     bg={{
                       base: "rgb(19,21,54)",
                     }}
+                    value={userdetails.dname}
                     border='transparent'
                     borderRadius='20px'
                     fontSize='sm'
@@ -252,6 +268,7 @@ function SignUp() {
                   fontWeight='normal'>
                   Password
                 </FormLabel>
+
                 <GradientBorder
                   mb='24px'
                   h='50px'
@@ -273,7 +290,117 @@ function SignUp() {
                     placeholder='Your password'
                   />
                 </GradientBorder>
-                <FormControl display='flex' alignItems='center' mb='24px'>
+                <FormControl>
+                  <FormLabel
+                    ms='4px'
+                    fontSize='sm'
+                    fontWeight='normal'
+                    color='white'>
+                    Public id
+                  </FormLabel>
+                  <GradientBorder
+                    mb='24px'
+                    w={{ base: "100%", lg: "fit-content" }}
+                    borderRadius='20px'>
+                    <Input
+                      color='white'
+                      bg='rgb(19,21,54)'
+                      border='transparent'
+                      borderRadius='20px'
+                      fontSize='sm'
+                      size='lg'
+                      w={{ base: "100%", md: "346px" }}
+                      maxW='100%'
+                      h='46px'
+                      placeholder='Public id'
+                    />
+                  </GradientBorder>
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    ms='4px'
+                    fontSize='sm'
+                    fontWeight='normal'
+                    color='white'>
+                    Phone number
+                  </FormLabel>
+                  <GradientBorder
+                    mb='24px'
+                    w={{ base: "100%", lg: "fit-content" }}
+                    borderRadius='20px'>
+                    <Input
+                      color='white'
+                      bg='rgb(19,21,54)'
+                      border='transparent'
+                      borderRadius='20px'
+                      fontSize='sm'
+                      size='lg'
+                      w={{ base: "100%", md: "346px" }}
+                      maxW='100%'
+                      h='46px'
+                      placeholder='Token'
+                    />
+                  </GradientBorder>
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    ms='4px'
+                    fontSize='sm'
+                    fontWeight='normal'
+                    color='white'>
+                    Token
+                  </FormLabel>
+                  <GradientBorder
+                    mb='24px'
+                    w={{ base: "100%", lg: "fit-content" }}
+                    borderRadius='20px'>
+                    <Input
+                      color='white'
+                      bg='rgb(19,21,54)'
+                      border='transparent'
+                      borderRadius='20px'
+                      fontSize='sm'
+                      size='lg'
+                      w={{ base: "100%", md: "346px" }}
+                      maxW='100%'
+                      h='46px'
+                      placeholder='Token'
+                    />
+                  </GradientBorder>
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    color={titleColor}
+                    ms='4px'
+                    fontSize='sm'
+                    fontWeight='normal'>
+                    Designation
+                  </FormLabel>
+                  <GradientBorder
+                    mb='24px'
+                    h='50px'
+                    w={{ base: "100%", lg: "fit-content" }}
+                    borderRadius='20px'>
+                    <Select
+                      color={titleColor}
+                      bg={{
+                        base: "rgb(19,21,54)",
+                      }}
+                      placeholder='Select option'
+                      border='transparent'
+                      borderRadius='20px'
+                      fontSize='sm'
+                      size='lg'
+                      w={{ base: "100%", md: "346px" }}
+                      maxW='100%'
+                      h='46px'>
+                      <option value='option1'>Project manager</option>
+                      <option value='option2'>Supervisor</option>
+                    </Select>
+
+                  </GradientBorder>
+                </FormControl>
+                {/* <FormControl display='flex' alignItems='center' mb='24px'>
                   <DarkMode>
                     <Switch id='remember-login' colorScheme='brand' me='10px' />
                   </DarkMode>
@@ -285,8 +412,9 @@ function SignUp() {
                     fontWeight='normal'>
                     Remember me
                   </FormLabel>
-                </FormControl>
+                </FormControl> */}
                 <Button
+                onClick={()=>sumbit()}
                   variant='brand'
                   fontSize='10px'
                   type='submit'
@@ -310,7 +438,7 @@ function SignUp() {
                     color={titleColor}
                     as='span'
                     ms='5px'
-                    href='#'
+                    href='#/auth/signup'
                     fontWeight='bold'>
                     Sign In
                   </Link>
@@ -329,7 +457,7 @@ function SignUp() {
         <Box
           display={{ base: "none", lg: "block" }}
           overflowX='hidden'
-          h='1300px'
+          h='1400px'
           maxW={{ md: "50vw", lg: "48vw" }}
           w='960px'
           position='absolute'
@@ -337,7 +465,7 @@ function SignUp() {
           <Box
             bgImage={signUpImage}
             w='100%'
-            h='1300px'
+            h='1400px'
             bgSize='cover'
             bgPosition='50%'
             position='absolute'
@@ -345,7 +473,8 @@ function SignUp() {
             flexDirection='column'
             justifyContent='center'
             alignItems='center'
-            position='absolute'>
+            // position='absolute'
+            >
             <Text
               textAlign='center'
               color='white'
@@ -362,7 +491,7 @@ function SignUp() {
               fontWeight='bold'
               bgClip='text !important'
               bg='linear-gradient(94.56deg, #FFFFFF 79.99%, #21242F 102.65%)'>
-              THE VISION UI DASHBOARD
+              METS CLOUD
             </Text>
           </Box>
         </Box>

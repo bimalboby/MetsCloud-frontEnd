@@ -117,7 +117,7 @@ export default function Dashboard(props) {
       <RtlProvider>
         <Sidebar
           routes={routes}
-          logoText={"VISION UI FREE"}
+          logoText={"METS CLOUD"}
           display='none'
           sidebarVariant={sidebarVariant}
           {...rest}
@@ -132,7 +132,7 @@ export default function Dashboard(props) {
           <Portal>
             <AdminNavbar
               onOpen={onOpen}
-              logoText={"VISION UI FREE"}
+              logoText={"METS CLOUD"}
               brandText={getActiveRoute(routes)}
               secondary={getActiveNavbar(routes)}
               fixed={fixed}

@@ -34,7 +34,7 @@ export default function Footer(props) {
       justifyContent='space-between'
       px='30px'
       pb='20px'>
-      <Text
+      {/* <Text
         fontSize='sm'
         color='white'
         textAlign={{
@@ -60,7 +60,7 @@ export default function Footer(props) {
         {document.documentElement.dir === "rtl"
           ? "للحصول على ويب أفضل"
           : " for a better web"}
-      </Text>
+      </Text> */}
       <List display='flex'>
         <ListItem
           me={{

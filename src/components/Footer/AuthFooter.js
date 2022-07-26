@@ -32,7 +32,7 @@ export default function AuthFooter(props) {
       justifyContent='space-between'
       pb='20px'
       fontSize='sm'>
-      <Text
+      {/* <Text
         color='white'
         textAlign={{
           base: "center",
@@ -56,8 +56,8 @@ export default function AuthFooter(props) {
         {document.documentElement.dir === "rtl"
           ? "للحصول على ويب أفضل"
           : " for a better web"}
-      </Text>
-      <List display='flex'>
+      </Text> */}
+      {/* <List display='flex'>
         <ListItem
           me={{
             base: "20px",
@@ -96,7 +96,7 @@ export default function AuthFooter(props) {
             {document.documentElement.dir === "rtl" ? "رخصة" : "License"}
           </Link>
         </ListItem>
-      </List>
+      </List> */}
     </Flex>
   );
 }

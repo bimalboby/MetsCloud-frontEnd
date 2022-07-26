@@ -131,6 +131,7 @@ function SignIn() {
                 />
               </GradientBorder>
             </FormControl>
+            
             <FormControl display='flex' alignItems='center'>
               <DarkMode>
                 <Switch id='remember-login' colorScheme='brand' me='10px' />
@@ -164,7 +165,7 @@ function SignIn() {
               mt='0px'>
               <Text color={textColor} fontWeight='medium'>
                 Don't have an account?
-                <Link color={titleColor} as='span' ms='5px' fontWeight='bold'>
+                <Link href="#/auth/signup" color={titleColor} as='span' ms='5px' fontWeight='bold'>
                   Sign Up
                 </Link>
               </Text>
@@ -215,7 +216,7 @@ function SignIn() {
               fontWeight='bold'
               bgClip='text !important'
               bg='linear-gradient(94.56deg, #FFFFFF 79.99%, #21242F 102.65%)'>
-              THE VISION UI DASHBOARD
+              METS CLOUD
             </Text>
           </Box>
         </Box>
