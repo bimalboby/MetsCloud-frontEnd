@@ -221,6 +221,10 @@ function SignUp() {
                       base: "rgb(19,21,54)",
                     }}
                     value={userdetails.dname}
+                    onChange={(e)=>setuserdetails(pre=>({
+                      ...pre,
+                      dname:e.target.value
+                    }))}
                     border='transparent'
                     borderRadius='20px'
                     fontSize='sm'
@@ -245,6 +249,11 @@ function SignUp() {
                   w={{ base: "100%", lg: "fit-content" }}
                   borderRadius='20px'>
                   <Input
+                  value={userdetails.email}
+                  onChange={(e)=>setuserdetails(pre=>({
+                    ...pre,
+                    email:e.target.value
+                  }))}
                     color={titleColor}
                     bg={{
                       base: "rgb(19,21,54)",
@@ -274,6 +283,11 @@ function SignUp() {
                   w={{ base: "100%", lg: "fit-content" }}
                   borderRadius='20px'>
                   <Input
+                  value={userdetails.password}
+                  onChange={(e)=>setuserdetails(pre=>({
+                    ...pre,
+                    password:e.target.value
+                  }))}
                     color={titleColor}
                     bg={{
                       base: "rgb(19,21,54)",
@@ -302,6 +316,11 @@ function SignUp() {
                     w={{ base: "100%", lg: "fit-content" }}
                     borderRadius='20px'>
                     <Input
+                    value={userdetails.publicid}
+                    onChange={(e)=>setuserdetails(pre=>({
+                      ...pre,
+                      publicid:e.target.value
+                    }))}
                       color='white'
                       bg='rgb(19,21,54)'
                       border='transparent'
@@ -328,6 +347,11 @@ function SignUp() {
                     w={{ base: "100%", lg: "fit-content" }}
                     borderRadius='20px'>
                     <Input
+                    value={userdetails.phno}
+                    onChange={(e)=>setuserdetails(pre=>({
+                      ...pre,
+                      phno:e.target.value
+                    }))}
                       color='white'
                       bg='rgb(19,21,54)'
                       border='transparent'
@@ -354,6 +378,11 @@ function SignUp() {
                     w={{ base: "100%", lg: "fit-content" }}
                     borderRadius='20px'>
                     <Input
+                    value={userdetails.token}
+                    onChange={(e)=>setuserdetails(pre=>({
+                      ...pre,
+                      token:e.target.value
+                    }))}
                       color='white'
                       bg='rgb(19,21,54)'
                       border='transparent'
@@ -385,6 +414,11 @@ function SignUp() {
                       bg={{
                         base: "rgb(19,21,54)",
                       }}
+                      value={userdetails.designation}
+                    onChange={(e)=>setuserdetails(pre=>({
+                      ...pre,
+                      designation:e.target.value
+                    }))}
                       placeholder='Select option'
                       border='transparent'
                       borderRadius='20px'
