@@ -47,34 +47,55 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import Axios from "Config/Axios/Axios";
 
 function PmTables() {
-    const [pms, setPms] = useState([])
+  const [pms, setPms] = useState([]);
+  const [svs, setSvs] = useState([]);
+  const [cudesign, setCudesign] = useState("pm");
+  const [cupm, setCupm] = useState("")
 
-    useEffect(() => {
-        const getpms = async () => {
-            const res = await Axios.post("/iiot-view-projectManagers");
-            setPms(res.data)
-        }
-        getpms()
-    }, [])
-    
+  useEffect(() => {
+    console.log(cudesign);
+    const getsvs = async () => {
+      const res = await Axios.post(`/iiot-view-?pm=${cupm}`);
+      setSvs(res.data);
+    };
+    const getpms = async () => {
+      const res = await Axios.post("/iiot-view-projectManagers");
+      setPms(res.data);
+    };
+    if(cudesign=="pm"){
+      getpms();
+    }else{
+      getsvs();
+    }
+  }, [cudesign]);
+
+ console.log(svs,pms);
+  const userdesignnation = {
+    bo:"Business Owner",
+    pm:"Project Manager",
+    sv:"Supervisor"
+}
+
+
   return (
-    <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
+    <Flex direction="column" pt={{ base: "120px", md: "75px" }}>
       {/* Authors Table */}
-      <Card overflowX={{ sm: "scroll", xl: "hidden" }} pb='0px'>
-        <CardHeader p='6px 0px 22px 0px'>
-          <Text fontSize='lg' color='#fff' fontWeight='bold'>
-            Project Manager
+      <Card overflowX={{ sm: "scroll", xl: "hidden" }} pb="0px">
+        <CardHeader p="6px 0px 22px 0px">
+          <Text fontSize="lg" color="#fff" fontWeight="bold">
+            {userdesignnation[cudesign]}
           </Text>
         </CardHeader>
         <CardBody>
-          <Table variant='simple' color='#fff'>
+          <Table variant="simple" color="#fff">
             <Thead>
-              <Tr my='.8rem' ps='0px' color='gray.400'>
+              <Tr my=".8rem" ps="0px" color="gray.400">
                 <Th
-                  ps='0px'
-                  color='gray.400'
-                  fontFamily='Plus Jakarta Display'
-                  borderBottomColor='#56577A'>
+                  ps="0px"
+                  color="gray.400"
+                  fontFamily="Plus Jakarta Display"
+                  borderBottomColor="#56577A"
+                >
                   Author
                 </Th>
                 {/* <Th
@@ -84,9 +105,10 @@ function PmTables() {
                   Function
                 </Th> */}
                 <Th
-                  color='gray.400'
-                  fontFamily='Plus Jakarta Display'
-                  borderBottomColor='#56577A'>
+                  color="gray.400"
+                  fontFamily="Plus Jakarta Display"
+                  borderBottomColor="#56577A"
+                >
                   Status
                 </Th>
                 {/* <Th
@@ -95,21 +117,40 @@ function PmTables() {
                   borderBottomColor='#56577A'>
                   Employed
                 </Th> */}
-                <Th borderBottomColor='#56577A'></Th>
+                <Th borderBottomColor="#56577A"></Th>
               </Tr>
             </Thead>
             <Tbody>
-              {pms.map((row, index, arr) => {
-                return (
-                  <TablesTableRow
-                    name={row.name}
-                    logo={row.img}
-                    email={row.email}
-                    status={row.status}
-                    lastItem={index === arr.length - 1 ? true : false}
-                  />
-                );
-              })}
+              {cudesign=='sv'?(
+                svs.map((row, index, arr) =>(
+                    <TablesTableRow
+                      name={row.name}
+                      logo={row.img}
+                      email={row.email}
+                      status={row.status}
+                      pmid={row.id}
+                      lastItem={index === arr.length - 1 ? true : false}
+                      setCupm={setCupm}
+                      cudesign={cudesign}
+                      setCudesign={setCudesign}
+                    />
+                  ))
+              ):(
+                pms.map((row, index, arr) => (
+                    <TablesTableRow
+                      name={row.name}
+                      logo={row.img}
+                      email={row.email}
+                      status={row.status}
+                      pmid={row.id}
+                      lastItem={index === arr.length - 1 ? true : false}
+                      setCupm={setCupm}
+                      cudesign={cudesign}
+                      setCudesign={setCudesign}
+                    />
+                  ))
+              )
+              }
             </Tbody>
           </Table>
         </CardBody>

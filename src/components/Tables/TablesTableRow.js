@@ -33,11 +33,15 @@ function TablesTableRow(props) {
     logo,
     name,
     email,
+    pmid,
     subdomain,
     domain,
     status,
     date,
     lastItem,
+    cudesign,
+    setCudesign,
+    setCupm
   } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
@@ -104,7 +108,11 @@ function TablesTableRow(props) {
         </Text>
       </Td> */}
       <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
-        <Button p='0px' bg='transparent' variant='no-hover'>
+        <Button onClick={()=>{
+          console.log(pmid);
+          setCupm(pmid);
+          setCudesign("sv")
+        }} p='0px' bg='transparent' variant='no-hover'>
           <Text
             fontSize='sm'
             color='gray.400'
