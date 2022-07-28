@@ -34,6 +34,8 @@ import {
   SupportIcon,
 } from "components/Icons/Icons";
 import PmTables from "components/PmTables/PmTables";
+import SvTables from "Comp/UserTable/SvTables";
+import UserDevices from "Comp/Devices/UserDevices";
 
 var dashRoutes = [
   {
@@ -57,7 +59,7 @@ var dashRoutes = [
     name: "Supervisor",
     rtlName: "لوحة القيادة",
     icon: <HomeIcon color='inherit' />,
-    component: Dashboard,
+    component: SvTables,
     layout: "/admin",
   },
   {
@@ -65,7 +67,7 @@ var dashRoutes = [
     name: "Devices",
     rtlName: "لوحة القيادة",
     icon: <HomeIcon color='inherit' />,
-    component: Dashboard,
+    component: UserDevices,
     layout: "/admin",
   },
   {

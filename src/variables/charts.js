@@ -85,7 +85,7 @@ export const barChartOptionsDashboard = {
 export const lineChartDataDashboard = [
   {
     name: "Mobile apps",
-    data: [0, 250, 300, 220, 500, 250, 300, 230, 300, 350, 250, 400],
+    data: [0, 250, 300, 220, 500, 250, 300, 230, 300, 350, 250, 1000],
   },
   {
     name: "Websites",

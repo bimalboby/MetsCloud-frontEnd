@@ -28,6 +28,8 @@ import {
   Th,
   Thead,
   Tr,
+  Grid,
+  Box,
 } from "@chakra-ui/react";
 
 // Custom components
@@ -45,17 +47,23 @@ import { tablesProjectData, tablesTableData } from "variables/general";
 // Icons
 import { AiFillCheckCircle } from "react-icons/ai";
 import Axios from "Config/Axios/Axios";
+import LineChart from "components/Charts/LineChart";
+import { lineChartDataDashboard } from "variables/charts";
+import { lineChartOptionsDashboard } from "variables/charts";
+import SvCharts from "./SvCharts";
 
 function PmTables() {
   const [pms, setPms] = useState([]);
   const [svs, setSvs] = useState([]);
   const [cudesign, setCudesign] = useState("pm");
   const [cupm, setCupm] = useState("")
+  const [cusv, setCusv] = useState("")
+  const [isdevice, setIsdevice] = useState(false)
 
   useEffect(() => {
     console.log(cudesign);
     const getsvs = async () => {
-      const res = await Axios.post(`/iiot-view-?pm=${cupm}`);
+      const res = await Axios.post(`/iiot-view-superVisor`);
       setSvs(res.data);
     };
     const getpms = async () => {
@@ -76,11 +84,14 @@ function PmTables() {
     sv:"Supervisor"
 }
 
-
   return (
     <Flex direction="column" pt={{ base: "120px", md: "75px" }}>
       {/* Authors Table */}
-      <Card overflowX={{ sm: "scroll", xl: "hidden" }} pb="0px">
+      {
+        isdevice?(
+          <SvCharts />
+        ):(
+          <Card overflowX={{ sm: "scroll", xl: "hidden" }} pb="0px">
         <CardHeader p="6px 0px 22px 0px">
           <Text fontSize="lg" color="#fff" fontWeight="bold">
             {userdesignnation[cudesign]}
@@ -132,7 +143,9 @@ function PmTables() {
                       lastItem={index === arr.length - 1 ? true : false}
                       setCupm={setCupm}
                       cudesign={cudesign}
+                      setCusv={setCusv}
                       setCudesign={setCudesign}
+                      setIsdevice={setIsdevice}
                     />
                   ))
               ):(
@@ -142,8 +155,9 @@ function PmTables() {
                       logo={row.img}
                       email={row.email}
                       status={row.status}
-                      pmid={row.id}
+                      svid={row.id}
                       lastItem={index === arr.length - 1 ? true : false}
+                      setCusv={setCusv}
                       setCupm={setCupm}
                       cudesign={cudesign}
                       setCudesign={setCudesign}
@@ -155,6 +169,9 @@ function PmTables() {
           </Table>
         </CardBody>
       </Card>
+        )
+      }
+      
     </Flex>
   );
 }

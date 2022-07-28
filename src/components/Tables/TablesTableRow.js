@@ -41,7 +41,10 @@ function TablesTableRow(props) {
     lastItem,
     cudesign,
     setCudesign,
-    setCupm
+    setCupm,
+    svid,
+    setCusv,
+    setIsdevice
   } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
@@ -110,8 +113,14 @@ function TablesTableRow(props) {
       <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
         <Button onClick={()=>{
           console.log(pmid);
-          setCupm(pmid);
+          if(cudesign=="sv"){
+            setIsdevice(true)
+            setCusv(svid);
+          }else{
+            setCupm(pmid);
           setCudesign("sv")
+          }
+          
         }} p='0px' bg='transparent' variant='no-hover'>
           <Text
             fontSize='sm'

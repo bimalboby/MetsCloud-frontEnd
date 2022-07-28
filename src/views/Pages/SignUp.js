@@ -433,8 +433,8 @@ function SignUp() {
                       w={{ base: "100%", md: "346px" }}
                       maxW='100%'
                       h='46px'>
-                      <option value='option1'>Project manager</option>
-                      <option value='option2'>Supervisor</option>
+                      <option value='projectManager'>Project manager</option>
+                      <option value='supervisor'>Supervisor</option>
                     </Select>
 
                   </GradientBorder>
