@@ -16,9 +16,8 @@ const LineChartCard = ({lineChartDataDashboard,userid,designation}) => {
         const res = await Axios.post(`/iiot-chart-data?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
         console.log(res.data);
         setChartdata(res.data)
-        if(ltimer==0)
         setlTimer(2000)
-    },ltimer)
+    },2000)
     return ()=>{
       clearInterval(aaaa)
     }
