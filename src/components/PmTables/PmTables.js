@@ -16,7 +16,7 @@
 
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // Chakra imports
 import {
@@ -51,9 +51,11 @@ import LineChart from "components/Charts/LineChart";
 import { lineChartDataDashboard } from "variables/charts";
 import { lineChartOptionsDashboard } from "variables/charts";
 import SvCharts from "./SvCharts";
+import { usercontext } from "Hooks/Authcontext/Authcontext";
 
 function PmTables() {
   const [pms, setPms] = useState([]);
+  const {userid} = useContext(usercontext)
   const [svs, setSvs] = useState([]);
   const [cudesign, setCudesign] = useState("pm");
   const [cupm, setCupm] = useState("")
@@ -63,11 +65,11 @@ function PmTables() {
   useEffect(() => {
     console.log(cudesign);
     const getsvs = async () => {
-      const res = await Axios.post(`/iiot-view-superVisor`);
+      const res = await Axios.post(`/iiot-view-superVisor?userid=${cupm}`);
       setSvs(res.data);
     };
     const getpms = async () => {
-      const res = await Axios.post("/iiot-view-projectManagers");
+      const res = await Axios.post(`/iiot-view-projectManagers?userid=${userid}`);
       setPms(res.data);
     };
     if(cudesign=="pm"){
@@ -169,10 +171,12 @@ function PmTables() {
           </Table>
         </CardBody>
       </Card>
+      
         )
       }
       
     </Flex>
+    
   );
 }
 

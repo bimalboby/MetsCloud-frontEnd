@@ -45,7 +45,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { usercontext } from "Hooks/Authcontext/Authcontext";
 
 function SignIn() {
-  const {setIsLoggedIn} = useContext(usercontext)
+  const {setIsLoggedIn,getuserdetails} = useContext(usercontext)
   let loc = useHistory()
   const titleColor = "white";
   const textColor = "gray.400";
@@ -59,8 +59,10 @@ function SignIn() {
     const res = await Axios.post("/iiot-signin",userdetails)
     console.log(res)
     setIsLoggedIn(res.data.isLoggedIn)
-
+    localStorage.setItem("id",res.data.id)
+    localStorage.setItem("designation",res.data.des)
     if(res.data.isLoggedIn){
+      getuserdetails(res.data.id,res.data.des)
       loc.replace({ pathname: '/admin/dashboard'})
     }
   }

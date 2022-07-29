@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 // Chakra imports
 import {
@@ -85,6 +85,10 @@ export default function Dashboard() {
   const { userdetails } = useContext(usercontext)
 
 
+  useEffect(() => {
+    
+  }, [])
+  
   return (
     <Flex flexDirection='column' pt={{ base: "120px", md: "75px" }}>
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
