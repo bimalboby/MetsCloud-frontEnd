@@ -16,7 +16,7 @@
 
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // Chakra imports
 import {
@@ -51,15 +51,23 @@ import Card from "components/Card/Card";
 import CardHeader from "components/Card/CardHeader";
 import CardBody from "components/Card/CardBody";
 import SvCharts from "components/PmTables/SvCharts";
+import { usercontext } from "Hooks/Authcontext/Authcontext";
 
 function SvTables() {
   const [cudesign, setCudesign] = useState("sv");
+  const {userid,designation} = useContext(usercontext)
   const [cusv, setCusv] = useState("")
   const [isdevice, setIsdevice] = useState(false)
   const [svs, setSvs] = useState([])
 
+  const userdesignnation = {
+    bo:"businessOwner",
+    pm:"projectManager",
+    sv:"supervisor"
+}
+
   useEffect(async() => {
-    const res = await Axios.post(`/iiot-view-superVisor-bo`);
+    const res = await Axios.post(`/iiot-view-superVisor?userid=${userid}&designation=${designation}`);
       setSvs(res.data);
   }, []);
 
@@ -68,7 +76,7 @@ function SvTables() {
       {/* Authors Table */}
       {
         isdevice?(
-          <SvCharts />
+          <SvCharts id={cusv} designation='supervisor' />
         ):(
           <Card overflowX={{ sm: "scroll", xl: "hidden" }} pb="0px">
         <CardHeader p="6px 0px 22px 0px">

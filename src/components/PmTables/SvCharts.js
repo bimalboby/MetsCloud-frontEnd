@@ -3,14 +3,14 @@ import LineChartCard from "Comp/Charts/LineChartCard/LineChartCard";
 import Axios from "Config/Axios/Axios";
 import React, { useEffect, useState } from "react";
 
-const SvCharts = () => {
+const SvCharts = ({id,designation}) => {
     const [charts, setCharts] = useState([])
 
     useEffect(() => {
         const getchart = async() => {
-            const res = await Axios.post("/iiot-chart")
+            const res = await Axios.post(`/iiot-chart-ids?id=${id}&designation=${designation}`)
             console.log(res.data);
-            setCharts(res.data);
+            setCharts(res.data.ids);
           }
           if(charts!=[])
           getchart()
@@ -24,7 +24,7 @@ const SvCharts = () => {
     >
       {
         charts.map((chart)=>(
-            <LineChartCard lineChartDataDashboard={chart.chartdata.dataArray} lineChartOptionsDashboard={chart.chartoption} />
+            <LineChartCard lineChartDataDashboard={chart} userid={id} designation={designation}/>
         ))
       }
     </Grid>

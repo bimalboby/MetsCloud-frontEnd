@@ -28,24 +28,23 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function TablesTableRow(props) {
-  const {
-    logo,
-    name,
-    email,
-    pmid,
-    subdomain,
-    domain,
-    status,
-    date,
-    lastItem,
-    cudesign,
-    setCudesign,
-    setCupm,
-    svid,
-    setCusv,
-    setIsdevice
-  } = props;
+function TablesTableRow({
+  logo,
+  name,
+  email,
+  pmid,
+  subdomain,
+  domain,
+  status,
+  date,
+  lastItem,
+  cudesign,
+  setCudesign,
+  setCupm,
+  svid,
+  setCusv,
+  setIsdevice
+}) {
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
@@ -112,13 +111,14 @@ function TablesTableRow(props) {
       </Td> */}
       <Td border={lastItem ? "none" : null} borderBottomColor='#56577A'>
         <Button onClick={()=>{
-          console.log(pmid);
+          console.log(svid);
           if(cudesign=="sv"){
-            setIsdevice(true)
             setCusv(svid);
+            setIsdevice(true)
+            
           }else{
             setCupm(pmid);
-          setCudesign("sv")
+            setCudesign("sv")
           }
           
         }} p='0px' bg='transparent' variant='no-hover'>

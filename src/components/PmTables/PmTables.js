@@ -17,6 +17,7 @@
 */
 
 import React, { useContext, useEffect, useState } from "react";
+import medusa from "assets/img/cardimgfree.png";
 
 // Chakra imports
 import {
@@ -30,6 +31,12 @@ import {
   Tr,
   Grid,
   Box,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  Spacer,
+  Button,
 } from "@chakra-ui/react";
 
 // Custom components
@@ -52,10 +59,15 @@ import { lineChartDataDashboard } from "variables/charts";
 import { lineChartOptionsDashboard } from "variables/charts";
 import SvCharts from "./SvCharts";
 import { usercontext } from "Hooks/Authcontext/Authcontext";
+import { GlobeIcon } from "components/Icons/Icons";
+import IconBox from "components/Icons/IconBox";
+import { BsArrowRight } from "react-icons/bs";
+import { useHistory } from "react-router-dom";
 
 function PmTables() {
+  let loc = useHistory()
   const [pms, setPms] = useState([]);
-  const {userid} = useContext(usercontext)
+  const {userid,userdetails} = useContext(usercontext)
   const [svs, setSvs] = useState([]);
   const [cudesign, setCudesign] = useState("pm");
   const [cupm, setCupm] = useState("")
@@ -64,9 +76,12 @@ function PmTables() {
 
   useEffect(() => {
     console.log(cudesign);
+    
     const getsvs = async () => {
-      const res = await Axios.post(`/iiot-view-superVisor?userid=${cupm}`);
+      console.log(cupm);
+      const res = await Axios.post(`/iiot-view-superVisor?userid=${cupm}&designation=projectManager`);
       setSvs(res.data);
+
     };
     const getpms = async () => {
       const res = await Axios.post(`/iiot-view-projectManagers?userid=${userid}`);
@@ -79,6 +94,7 @@ function PmTables() {
     }
   }, [cudesign]);
 
+console.log(cupm);
  console.log(svs,pms);
   const userdesignnation = {
     bo:"Business Owner",
@@ -86,12 +102,18 @@ function PmTables() {
     sv:"Supervisor"
 }
 
+const userdesignnation2 = {
+  bo:"businessOwner",
+  pm:"projectManager",
+  sv:"supervisor"
+}
+
   return (
     <Flex direction="column" pt={{ base: "120px", md: "75px" }}>
       {/* Authors Table */}
       {
         isdevice?(
-          <SvCharts />
+          <SvCharts id={cusv} designation={'supervisor'} />
         ):(
           <Card overflowX={{ sm: "scroll", xl: "hidden" }} pb="0px">
         <CardHeader p="6px 0px 22px 0px">
@@ -141,7 +163,7 @@ function PmTables() {
                       logo={row.img}
                       email={row.email}
                       status={row.status}
-                      pmid={row.id}
+                      svid={row.id}
                       lastItem={index === arr.length - 1 ? true : false}
                       setCupm={setCupm}
                       cudesign={cudesign}
@@ -157,7 +179,7 @@ function PmTables() {
                       logo={row.img}
                       email={row.email}
                       status={row.status}
-                      svid={row.id}
+                      pmid={row.id}
                       lastItem={index === arr.length - 1 ? true : false}
                       setCusv={setCusv}
                       setCupm={setCupm}
@@ -174,7 +196,75 @@ function PmTables() {
       
         )
       }
-      
+{/* <Grid
+        templateColumns={{ sm: "1fr", md: "1fr 1fr", "2xl": "2fr 1.2fr 1.5fr" }}
+        my='26px'
+        gap='18px'>
+        {/* Welcome Card 
+        <Card
+          p='0px'
+          gridArea={{ md: "1 / 1 / 2 / 3", "2xl": "auto" }}
+          bgImage={medusa}
+          bgSize='cover'
+          bgPosition='50%'>
+          <CardBody w='100%' h='100%'>
+            <Flex flexDirection={{ sm: "column", lg: "row" }} w='100%' h='100%'>
+              <Flex
+                flexDirection='column'
+                h='100%'
+                p='22px'
+                minW='60%'
+                lineHeight='1.6'>
+                <Text fontSize='sm' color='gray.400' fontWeight='bold'>
+                  Project Manager's Devices
+                </Text>
+                <Text fontSize='28px' color='#fff' fontWeight='bold' mb='18px'>
+                </Text>
+                <Text
+                  fontSize='md'
+                  color='gray.400'
+                  fontWeight='normal'
+                  mb='auto'>
+                   <br />
+                </Text>
+                <Spacer />
+                <Flex align='center'>
+                  <Button
+                    p='0px'
+                    variant='no-hover'
+                    bg='transparent'
+                    onClick={()=>loc.push("admin/devices")}
+                    my={{ sm: "1.5rem", lg: "0px" }}>
+                    <Text
+                      fontSize='sm'
+                      color='#fff'
+                      fontWeight='bold'
+                      cursor='pointer'
+                      transition='all .3s ease'
+                      my={{ sm: "1.5rem", lg: "0px" }}
+                      _hover={{ me: "4px" }}>
+                      Tab to see
+                    </Text>
+                    <Icon
+                      as={BsArrowRight}
+                      w='20px'
+                      h='20px'
+                      color='#fff'
+                      fontSize='2xl'
+                      transition='all .3s ease'
+                      mx='.3rem'
+                      cursor='pointer'
+                      pt='4px'
+                      _hover={{ transform: "translateX(20%)" }}
+                    />
+                  </Button>
+                </Flex>
+              </Flex>
+            </Flex>
+          </CardBody>
+        </Card>
+       
+      </Grid> */}
     </Flex>
     
   );

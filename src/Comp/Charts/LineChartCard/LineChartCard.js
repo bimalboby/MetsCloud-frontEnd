@@ -5,27 +5,31 @@ import LineChart from 'components/Charts/LineChart'
 import Axios from 'Config/Axios/Axios'
 import React, { useEffect, useState } from 'react'
 
-const LineChartCard = ({lineChartDataDashboard,lineChartOptionsDashboard}) => {
+const LineChartCard = ({lineChartDataDashboard,userid,designation}) => {
   const [chartdata, setChartdata] = useState(lineChartDataDashboard)
   const [addtohome, setaddtohome] = useState(false)
+  const [ltimer, setlTimer] = useState(0)
 
   useEffect(() => {
     console.log("dsgdgdfgdfg");
     const aaaa = setInterval(async()=>{
-        const res = await Axios.post("/iiot-chart")
+        const res = await Axios.post(`/iiot-chart-data?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
+        console.log(res.data);
         setChartdata(res.data)
-    },2000)
+        if(ltimer==0)
+        setlTimer(2000)
+    },ltimer)
     return ()=>{
       clearInterval(aaaa)
     }
-  }, [chartdata])
+  }, [])
   
   return (
     <Card p="28px 0px 0px 0px">
         <CardHeader mb="20px" ps="22px"  >
           <Flex direction="column" alignSelf="flex-start">
             <Text fontSize="lg" color="#fff" fontWeight="bold" mb="6px">
-              {lineChartDataDashboard[0].name}
+              {chartdata.name}
             </Text>
             <Text fontSize="md" fontWeight="medium" color="gray.400">
               <Text as="span" color="green.400" fontWeight="bold">
@@ -52,10 +56,15 @@ const LineChartCard = ({lineChartDataDashboard,lineChartOptionsDashboard}) => {
                   />
         </CardHeader>
         <Box w="100%" minH={{ sm: "300px" }}>
-          <LineChart
-            lineChartData={chartdata}
-            lineChartOptions={lineChartOptionsDashboard}
+          {
+            chartdata && (
+              <LineChart
+            lineChartData={chartdata?.chartdata?.dataArray}
+            lineChartOptions={chartdata.chartoption}
           />
+            )
+          }
+          
         </Box>
       </Card>
   )

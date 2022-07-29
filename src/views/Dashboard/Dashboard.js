@@ -272,37 +272,7 @@ export default function Dashboard() {
                    <br />
                   {userdetails.organization}
                 </Text>
-                {/* <Spacer />
-                <Flex align='center'>
-                  <Button
-                    p='0px'
-                    variant='no-hover'
-                    bg='transparent'
-                    my={{ sm: "1.5rem", lg: "0px" }}>
-                    <Text
-                      fontSize='sm'
-                      color='#fff'
-                      fontWeight='bold'
-                      cursor='pointer'
-                      transition='all .3s ease'
-                      my={{ sm: "1.5rem", lg: "0px" }}
-                      _hover={{ me: "4px" }}>
-                      Tab to record
-                    </Text>
-                    <Icon
-                      as={BsArrowRight}
-                      w='20px'
-                      h='20px'
-                      color='#fff'
-                      fontSize='2xl'
-                      transition='all .3s ease'
-                      mx='.3rem'
-                      cursor='pointer'
-                      pt='4px'
-                      _hover={{ transform: "translateX(20%)" }}
-                    />
-                  </Button>
-                </Flex> */}
+
               </Flex>
             </Flex>
           </CardBody>
