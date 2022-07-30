@@ -23,7 +23,7 @@ import Footer from "components/Footer/Footer.js";
 // Layout components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 // import routes from "routes.js";
 import Dashboard from "views/Dashboard/Dashboard.js";
@@ -44,32 +44,60 @@ import PmTables from "components/PmTables/PmTables";
 import SvTables from "Comp/UserTable/SvTables";
 import UserDevices from "Comp/Devices/UserDevices";
 
-let routes = [
-  {
-    path: "/dashboard",
-    name: "Home",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
-    component: Dashboard,
-    layout: "/admin",
-  },
-  {
-    path: "/projectmanagers",
-    name: "Project Manager",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
-    component: PmTables,
-    layout: "/admin",
-  },
-  {
-    path: "/supervisors",
-    name: "Supervisor",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
-    component: SvTables,
-    layout: "/admin",
-  },
-  {
+// Custom Chakra theme
+import theme from "theme/themeAdmin.js";
+import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
+// Custom components
+import MainPanel from "../components/Layout/MainPanel";
+import PanelContainer from "../components/Layout/PanelContainer";
+import PanelContent from "../components/Layout/PanelContent";
+import { usercontext } from "Hooks/Authcontext/Authcontext";
+import AddDevice from "Comp/Devices/AddDevice";
+import AddSensor from "Comp/Forms/AddSensor";
+import GetToken from "Comp/Forms/GetToken";
+
+
+export default function ADashboard(props) {
+  const {designation} = useContext(usercontext)
+
+  let initialroute = [
+    {
+      path: "/dashboard",
+      name: "Home",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: Dashboard,
+      layout: "/admin",
+    }
+  ]
+  if(designation=="businessOwner"){
+    initialroute.push({
+      path: "/projectmanagers",
+      name: "Project Manager",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: PmTables,
+      layout: "/admin",
+    })
+    initialroute.push({
+      path: "/supervisors",
+      name: "Supervisor",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: SvTables,
+      layout: "/admin",
+    })
+  }else if(designation=="projectManager"){
+    initialroute.push({
+      path: "/supervisors",
+      name: "Supervisor",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: SvTables,
+      layout: "/admin",
+    })
+  }
+  let routes = [...initialroute,{
     path: "/devices",
     name: "Devices",
     rtlName: "لوحة القيادة",
@@ -78,45 +106,20 @@ let routes = [
     layout: "/admin",
   },
   {
-    path: "/tables",
-    name: "Tables",
-    rtlName: "لوحة القيادة",
-    icon: <StatsIcon color='inherit' />,
-    component: Tables,
-    layout: "/admin",
-  },
-
-  {
-    path: "/tables",
+    path: "/device/add",
     name: "Add device",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
-    component: Tables,
+    component: AddDevice,
     layout: "/admin",
   },
 
   {
-    path: "/tables",
+    path: "/sensor/add",
     name: "Add sensor",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
-    component: Tables,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Generate token",
-    rtlName: "لوحة القيادة",
-    icon: <StatsIcon color='inherit' />,
-    component: Tables,
-    layout: "/admin",
-  },
-  {
-    path: "/billing",
-    name: "Billing",
-    rtlName: "لوحة القيادة",
-    icon: <CreditIcon color='inherit' />,
-    component: Billing,
+    component: AddSensor,
     layout: "/admin",
   },
   {
@@ -127,16 +130,44 @@ let routes = [
     secondaryNavbar: true,
     component: Profile,
     layout: "/admin",
-  }
+  },
+  {
+    path: "/generateToken",
+    name: "Tokens",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color='inherit' />,
+    component: GetToken,
+    layout: "/admin",
+  },
+  {
+    path: "/alert",
+    name: "Alert",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color='inherit' />,
+    component: null,
+    layout: "/admin",
+  },
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   rtlName: "لوحة القيادة",
+  //   icon: <StatsIcon color='inherit' />,
+  //   component: Tables,
+  //   layout: "/admin",
+  // },
+
+
+  // {
+  //   path: "/billing",
+  //   name: "Billing",
+  //   rtlName: "لوحة القيادة",
+  //   icon: <CreditIcon color='inherit' />,
+  //   component: Billing,
+  //   layout: "/admin",
+  // }
 ]
-// Custom Chakra theme
-import theme from "theme/themeAdmin.js";
-import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
-// Custom components
-import MainPanel from "../components/Layout/MainPanel";
-import PanelContainer from "../components/Layout/PanelContainer";
-import PanelContent from "../components/Layout/PanelContent";
-export default function ADashboard(props) {
+
+
   const { ...rest } = props;
   // states and functions
   const [sidebarVariant, setSidebarVariant] = useState("transparent");

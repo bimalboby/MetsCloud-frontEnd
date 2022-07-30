@@ -109,7 +109,7 @@ export default function AuthNavbar(props) {
   );
   var linksAuth = (
     <HStack display={{ sm: "none", lg: "flex" }}>
-      <NavLink to='/admin/dashboard'>
+      {/* <NavLink to='/admin/dashboard'>
         <Button
           fontSize='sm'
           ms='0px'
@@ -121,7 +121,7 @@ export default function AuthNavbar(props) {
           leftIcon={<HomeIcon color={navbarIcon} w='12px' h='12px' me='0px' />}>
           <Text>Home</Text>
         </Button>
-      </NavLink>
+      </NavLink> */}
       {/* <NavLink to='/admin/profile'>
         <Button
           fontSize='sm'
