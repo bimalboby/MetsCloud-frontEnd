@@ -24,7 +24,7 @@ import { ProfileIcon, SettingsIcon } from "components/Icons/Icons";
 import { ItemContent } from "components/Menu/ItemContent";
 import { SidebarResponsive } from "components/Sidebar/Sidebar";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 // import routes from "routes.js";
 import Dashboard from "views/Dashboard/Dashboard.js";
@@ -44,33 +44,59 @@ import {
 import PmTables from "components/PmTables/PmTables";
 import SvTables from "Comp/UserTable/SvTables";
 import UserDevices from "Comp/Devices/UserDevices";
+import { usercontext } from "Hooks/Authcontext/Authcontext";
 
-let routes = [
-  {
-    path: "/dashboard",
-    name: "Home",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
-    component: Dashboard,
-    layout: "/admin",
-  },
-  {
-    path: "/projectmanagers",
-    name: "Project Manager",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
-    component: PmTables,
-    layout: "/admin",
-  },
-  {
-    path: "/supervisors",
-    name: "Supervisor",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
-    component: SvTables,
-    layout: "/admin",
-  },
-  {
+export default function HeaderLinks(props) {
+  const { variant, children, fixed, secondary, onOpen, ...rest } = props;
+  const {designation,LogOut} = useContext(usercontext)
+  // Chakra Color Mode
+  let inputBg = "#0F1535";
+  let mainText = "gray.400";
+  let navbarIcon = "white";
+  let searchIcon = "white";
+
+  if (secondary) {
+    navbarIcon = "white";
+    mainText = "white";
+  }
+  let initialroute = [
+    {
+      path: "/dashboard",
+      name: "Home",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: Dashboard,
+      layout: "/admin",
+    }
+  ]
+  if(designation=="businessOwner"){
+    initialroute.push({
+      path: "/projectmanagers",
+      name: "Project Manager",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: PmTables,
+      layout: "/admin",
+    })
+    initialroute.push({
+      path: "/supervisors",
+      name: "Supervisor",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: SvTables,
+      layout: "/admin",
+    })
+  }else if(designation=="projectManager"){
+    initialroute.push({
+      path: "/supervisors",
+      name: "Supervisor",
+      rtlName: "لوحة القيادة",
+      icon: <HomeIcon color='inherit' />,
+      component: SvTables,
+      layout: "/admin",
+    })
+  }
+  let routes = [...initialroute,{
     path: "/devices",
     name: "Devices",
     rtlName: "لوحة القيادة",
@@ -78,15 +104,14 @@ let routes = [
     component: UserDevices,
     layout: "/admin",
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    rtlName: "لوحة القيادة",
-    icon: <StatsIcon color='inherit' />,
-    component: Tables,
-    layout: "/admin",
-  },
-
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   rtlName: "لوحة القيادة",
+  //   icon: <StatsIcon color='inherit' />,
+  //   component: Tables,
+  //   layout: "/admin",
+  // },
   {
     path: "/tables",
     name: "Add device",
@@ -128,22 +153,7 @@ let routes = [
     secondaryNavbar: true,
     component: Profile,
     layout: "/admin",
-  }
-]
-
-export default function HeaderLinks(props) {
-  const { variant, children, fixed, secondary, onOpen, ...rest } = props;
-
-  // Chakra Color Mode
-  let inputBg = "#0F1535";
-  let mainText = "gray.400";
-  let navbarIcon = "white";
-  let searchIcon = "white";
-
-  if (secondary) {
-    navbarIcon = "white";
-    mainText = "white";
-  }
+  }]
   const settingsRef = React.useRef();
   return (
     <Flex
@@ -220,6 +230,7 @@ export default function HeaderLinks(props) {
         // logo={logo}
         {...rest}
       />
+      
       <SettingsIcon
         cursor='pointer'
         ms={{ base: "16px", xl: "0px" }}
@@ -304,6 +315,16 @@ export default function HeaderLinks(props) {
           </Flex>
         </MenuList>
       </Menu>
+      <SettingsIcon
+        cursor='pointer'
+        ms='16px'
+        me='16px'
+        ref={settingsRef}
+        onClick={()=>LogOut()}
+        color={"red"}
+        w='18px'
+        h='18px'
+      />
     </Flex>
   );
 }

@@ -64,7 +64,7 @@ export default function Configurator(props) {
           <DrawerHeader pt='24px' px='24px'>
             <DrawerCloseButton color='white' />
             <Text color='white' fontSize='xl' fontWeight='bold' mt='16px'>
-              Vision UI Configurator
+            METS CLOUD
             </Text>
             <Text color='white' fontSize='md' mb='16px'>
               See your dashboard options.

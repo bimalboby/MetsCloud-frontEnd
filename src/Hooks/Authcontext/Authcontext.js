@@ -7,7 +7,7 @@ const Authcontext = (props) => {
   const [userdetails, setuserdetails] = useState({});
   const [userid, setUserid] = useState("");
   const [designation, setDesignation] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const userdesignnation = {
     bo: "Business Owner",
@@ -21,7 +21,16 @@ const Authcontext = (props) => {
     sv: "supervisor",
   };
 
-  console.log(userdetails);
+  console.log(designation);
+
+  const LogOut = () => {
+    localStorage.removeItem("designation")
+    localStorage.removeItem("id")
+    setIsLoggedIn(false)
+    setuserdetails({})
+    setUserid("")
+    setDesignation("")    
+  }
 
   const getuserdetails = async (uid,des) => {
     let res = await Axios.post(
@@ -36,6 +45,9 @@ const Authcontext = (props) => {
     setUserid(localStorage.getItem("id"));
     setDesignation(localStorage.getItem("designation"));
     getuserdetails(localStorage.getItem("id"),localStorage.getItem("designation"));
+    if(localStorage.getItem("id")&&localStorage.getItem("designation")){
+      setIsLoggedIn(true)
+    }
   }, []);
 
   return (
@@ -48,7 +60,9 @@ const Authcontext = (props) => {
         isLoggedIn,
         setIsLoggedIn,
         setUserid,
-        getuserdetails
+        setDesignation,
+        getuserdetails,
+        LogOut
       }}
     >
       {props.children}

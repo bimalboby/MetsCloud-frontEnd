@@ -219,7 +219,7 @@ export default function ADashboard(props) {
     <ChakraProvider theme={theme} resetCss={false}>
       <Sidebar
         routes={routes}
-        logoText={"VISION UI "}
+        logoText={"METS CLOUD "}
         display='none'
         sidebarVariant={sidebarVariant}
         {...rest}

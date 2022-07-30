@@ -19,11 +19,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Authcontext from "Hooks/Authcontext/Authcontext";
-import Routes from "Routes/Routes";
+import Router from "Routes/Router";
 
 ReactDOM.render(
   <Authcontext>
-    <Routes />
+    <Router />
   </Authcontext>,
   document.getElementById("root")
 );
