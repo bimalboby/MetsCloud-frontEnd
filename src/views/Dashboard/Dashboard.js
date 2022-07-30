@@ -94,7 +94,7 @@ export default function Dashboard() {
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
         {/* MiniStatistics Card */}
         {
-          userdetails.designation == "bo" && (
+          userdetails.designation == "Business Owner" && (
             <Card>
               <CardBody>
                 <Flex flexDirection='row' align='center' justify='center' w='100%'>
@@ -133,7 +133,7 @@ export default function Dashboard() {
 
         {/* MiniStatistics Card */}
         {
-          (userdetails.designation == "bo" || userdetails.designation == "pm") && (
+          (userdetails.designation == "Business Owner" || userdetails.designation == "Project Manager") && (
             <Card minH='83px'>
               <CardBody>
                 <Flex flexDirection='row' align='center' justify='center' w='100%'>
@@ -268,7 +268,7 @@ export default function Dashboard() {
                   color='gray.400'
                   fontWeight='normal'
                   mb='auto'>
-                  {userdetails.design}
+                  {userdetails.designation}
                    <br />
                   {userdetails.organization}
                 </Text>
