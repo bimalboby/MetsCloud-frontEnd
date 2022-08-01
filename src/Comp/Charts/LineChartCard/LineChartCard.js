@@ -24,6 +24,11 @@ const LineChartCard = ({lineChartDataDashboard,userid,designation}) => {
     }
   }, [])
 
+  useEffect(async() => {
+    const res = await Axios.post(`/iiot-dashboard-graphs?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
+  }, [addtohome])
+  
+
   const getxls = async() => {
     const res = await Axios.post(`/iiot-report-xls?chartId=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
     const blob = await res.blob();
