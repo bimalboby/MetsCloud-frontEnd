@@ -45,6 +45,7 @@ import PmTables from "components/PmTables/PmTables";
 import SvTables from "Comp/UserTable/SvTables";
 import UserDevices from "Comp/Devices/UserDevices";
 import { usercontext } from "Hooks/Authcontext/Authcontext";
+import GetToken from "Comp/Forms/GetToken";
 
 export default function HeaderLinks(props) {
   const { variant, children, fixed, secondary, onOpen, ...rest } = props;
@@ -130,22 +131,6 @@ export default function HeaderLinks(props) {
     layout: "/admin",
   },
   {
-    path: "/tables",
-    name: "Generate token",
-    rtlName: "لوحة القيادة",
-    icon: <StatsIcon color='inherit' />,
-    component: Tables,
-    layout: "/admin",
-  },
-  {
-    path: "/billing",
-    name: "Billing",
-    rtlName: "لوحة القيادة",
-    icon: <CreditIcon color='inherit' />,
-    component: Billing,
-    layout: "/admin",
-  },
-  {
     path: "/profile",
     name: "Profile",
     rtlName: "لوحة القيادة",
@@ -153,7 +138,32 @@ export default function HeaderLinks(props) {
     secondaryNavbar: true,
     component: Profile,
     layout: "/admin",
-  }]
+  },
+  {
+    path: "/generateToken",
+    name: "Tokens",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color='inherit' />,
+    component: GetToken,
+    layout: "/admin",
+  },
+  {
+    path: "/alert",
+    name: "Alert",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color='inherit' />,
+    component: null,
+    layout: "/admin",
+  },
+  {
+    path: "",
+    name: "Report",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color='inherit' />,
+    component: null,
+    layout: "/admin",
+  }
+]
   const settingsRef = React.useRef();
   return (
     <Flex

@@ -24,7 +24,7 @@ const SvCharts = ({id,designation}) => {
     >
       {
         charts.map((chart)=>(
-            <LineChartCard lineChartDataDashboard={chart} userid={id} designation={designation}/>
+            <LineChartCard lineChartDataDashboard={chart} uid={id} designation={designation}/>
         ))
       }
     </Grid>

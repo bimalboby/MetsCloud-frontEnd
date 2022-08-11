@@ -82,9 +82,10 @@ import { dashboardTableData, timelineData } from "variables/general";
 import { usercontext } from "Hooks/Authcontext/Authcontext";
 import InvoicesRow from "components/Tables/InvoicesRow";
 import { invoicesData } from "variables/general";
+import LineChartCard from "Comp/Charts/LineChartCard/LineChartCard";
 
 export default function Dashboard() {
-  const { userdetails } = useContext(usercontext)
+  const { userdetails ,inhomeGraphs,userid,designation} = useContext(usercontext)
 
 
   useEffect(() => {
@@ -252,6 +253,17 @@ export default function Dashboard() {
         gap='24px'
         mb='24px'>
       </Grid> */}
+      <Grid
+      templateColumns={{ sm: "1fr", md: "1fr 1fr", "2xl": "2fr 1.2fr 1.5fr" }}
+      my="26px"
+      gap="18px"
+    >
+      {
+        inhomeGraphs.map((chart)=>(
+            <LineChartCard lineChartDataDashboard={chart} userid={userid} designation={designation}/>
+        ))
+      }
+    </Grid>
       <Grid
         templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }}
         gap='24px'>

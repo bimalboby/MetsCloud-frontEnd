@@ -147,6 +147,30 @@ export default function ADashboard(props) {
     component: null,
     layout: "/admin",
   },
+  {
+    path: "",
+    name: "Report",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color='inherit' />,
+    component: null,
+    layout: "/admin",
+  },
+  // {
+  //   path: "",
+  //   name: "Chat",
+  //   rtlName: "لوحة القيادة",
+  //   icon: <StatsIcon color='inherit' />,
+  //   component: null,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "",
+  //   name: "Group",
+  //   rtlName: "لوحة القيادة",
+  //   icon: <StatsIcon color='inherit' />,
+  //   component: null,
+  //   layout: "/admin",
+  // },
   // {
   //   path: "/tables",
   //   name: "Tables",
@@ -254,6 +278,7 @@ export default function ADashboard(props) {
         display='none'
         sidebarVariant={sidebarVariant}
         {...rest}
+        style={{overflowY:"scroll"}}
       />
       <MainPanel
         ref={mainPanel}

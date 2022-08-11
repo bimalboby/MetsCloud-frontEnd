@@ -8,6 +8,7 @@ const Authcontext = (props) => {
   const [userid, setUserid] = useState("");
   const [designation, setDesignation] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [inhomeGraphs, setInhomeGraphs] = useState([])
 
   const userdesignnation = {
     bo: "Business Owner",
@@ -21,7 +22,7 @@ const Authcontext = (props) => {
     sv: "supervisor",
   };
 
-  console.log(designation);
+  console.log(inhomeGraphs);
 
   const LogOut = () => {
     localStorage.removeItem("designation")
@@ -41,10 +42,19 @@ const Authcontext = (props) => {
     console.log(res.data);
   };
 
+  const getusergraphs = async (uid,des) => {
+    let res = await Axios.post(
+      `/iiot-home-graphs?userid=${uid}&designation=${des}`
+    );
+    setInhomeGraphs(res.data.ids);
+    console.log(res.data);
+  };
+
   useEffect(() => {
     setUserid(localStorage.getItem("id"));
     setDesignation(localStorage.getItem("designation"));
     getuserdetails(localStorage.getItem("id"),localStorage.getItem("designation"));
+    getusergraphs(localStorage.getItem("id"),localStorage.getItem("designation"));
     if(localStorage.getItem("id")&&localStorage.getItem("designation")){
       setIsLoggedIn(true)
     }
@@ -54,8 +64,10 @@ const Authcontext = (props) => {
     <usercontext.Provider
       value={{
         userdetails,
+        inhomeGraphs,
         userid,
         designation,
+        setInhomeGraphs,
         setuserdetails,
         isLoggedIn,
         setIsLoggedIn,

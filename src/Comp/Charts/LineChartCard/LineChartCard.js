@@ -1,84 +1,113 @@
 import { Box, Flex,Text,Switch, Spacer, Icon, FormControl, FormLabel, Input, Stack, ButtonGroup, Button, Popover, PopoverTrigger, PopoverArrow, PopoverCloseButton, useDisclosure, IconButton, PopoverContent } from '@chakra-ui/react'
+import axios from 'axios'
 import Card from 'components/Card/Card'
 import CardHeader from 'components/Card/CardHeader'
 import LineChart from 'components/Charts/LineChart'
 import Axios from 'Config/Axios/Axios'
-import React, { useEffect, useState } from 'react'
+import { usercontext } from 'Hooks/Authcontext/Authcontext'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaBell, FaFileExcel, FaFilePdf, FaRegBell } from 'react-icons/fa'
+import download from 'js-file-download';
 
-
-
-const LineChartCard = ({lineChartDataDashboard,userid,designation}) => {
+const LineChartCard = ({lineChartDataDashboard,uid,udesignation}) => {
   const [chartdata, setChartdata] = useState(lineChartDataDashboard)
   const [addtohome, setaddtohome] = useState(false)
   const [ltimer, setlTimer] = useState(0)
   const { onOpen, onClose, isOpen } = useDisclosure()
   const firstFieldRef = React.useRef(null)
   const [highval, setHighval] = useState("")
+  const {userid,designation,inhomeGraphs,setInhomeGraphs} = useContext(usercontext)
   const [lowval, setLowval] = useState("")
 
   useEffect(() => {
     console.log("dsgdgdfgdfg");
     const aaaa = setInterval(async()=>{
-        const res = await Axios.post(`/iiot-chart-data?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
+        const res = await Axios.post(`/iiot-chart-data?id=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`)
         console.log(res.data);
         setChartdata(res.data)
-        setlTimer(20000)
+        setlTimer(2000)
     },20000)
     return ()=>{
       clearInterval(aaaa)
     }
   }, [])
 
+  // useEffect(async() => {
+  //   if(addtohome){
+  //     const res = await Axios.post(`/iiot-dashboard-graphs?id=${lineChartDataDashboard}&status=on&userid=${userid}&designation=${designation}`)
+  //   }else{
+  //     const res = await Axios.post(`/iiot-dashboard-graphs?id=${lineChartDataDashboard}&status=off&userid=${userid}&designation=${designation}`)
+  //   }
+  // }, [addtohome])
+
   useEffect(async() => {
-    if(addtohome){
-      const res = await Axios.post(`/iiot-dashboard-graphs?id=${lineChartDataDashboard}&status=on&userid=${userid}&designation=${designation}`)
-    }else{
-      const res = await Axios.post(`/iiot-dashboard-graphs?id=${lineChartDataDashboard}&status=off&userid=${userid}&designation=${designation}`)
-    }
-  }, [addtohome])
+    setaddtohome(inhomeGraphs.includes(lineChartDataDashboard))
+    const res = await Axios.post(`/iiot-load-alerts?id=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`)
+        console.log(res.data);
+        let minval = res.data.min.toString()
+        console.log(minval);
+        setLowval(minval)
+        let maxval = res.data.max.toString()
+        console.log(maxval);
+        setHighval(maxval)
+  }, [])
   
   const setgraph = async() => {
-    const res = await Axios.post(`/iiot-chart-alert-submit?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`,{
-      high:highval,
-      low:lowval
+    const res = await Axios.post(`/iiot-chart-alert-submit?id=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`,{
+      max:highval,
+      min:lowval
     })
   }
 
+  const changeToHome = (val) => {
+    setaddtohome(val);
+    if(val){
+      let res = Axios.post(`iiot-add-to-home?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
+      setInhomeGraphs(pre=>[...pre,lineChartDataDashboard])
+    }else{
+      let res = Axios.post(`iiot-remove-from-home?id=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
+      setInhomeGraphs(pre=>pre.filter(item=>item!=lineChartDataDashboard))
+    }
+  }
+
   const getxls = async() => {
-    const res = await Axios.post(`/iiot-report-xls?chartId=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
-    const blob = await res.blob();
-    download(blob, `${lineChartDataDashboard}-${Date.now().toString()}.xls`);
+    Axios.get(`/iiot-report-xls?chartId=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`,{responseType:"blob"})
+     .then(resp => {
+            download(resp.data,`${lineChartDataDashboard}-${Date.now().toString()}.xls`);
+     });
   }
 
   const getpdf = async() => {
-    const res = await Axios.post(`/iiot-report-pdf?chartId=${lineChartDataDashboard}&userid=${userid}&designation=${designation}`)
+    Axios.get(`/iiot-report-pdf?chartId=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`,{responseType:"blob"})
+     .then(resp => {
+            download(resp.data,`${lineChartDataDashboard}-${Date.now().toString()}.pdf`);
+     });
   }
 
   const TextInput = React.forwardRef((props, ref,value,onChange) => {
     return (
       <FormControl>
         <FormLabel htmlFor={props.id}>{props.label}</FormLabel>
-        <Input ref={ref} value={value} onChange={(e)=>onChange(e.target.value)} id={props.id} {...props} />
+        <Input  value={value} onChange={(e)=>onChange(e.target.value)} id={props.id} {...props} />
       </FormControl>
     )
   })
   
   // 2. Create the form
-  const Form = ({ firstFieldRef, onCancel ,highval,sethighval,lowval,setlowval}) => {
+  const Form = ({ firstFieldRef, onCancel}) => {
     return (
       <Stack spacing={4}>
         <TextInput
         value={highval}
-        onChange={sethighval}
+        onChange={(e)=>setHighval(e.target.value)}
           label='Highest Value'
           id='high'
-          ref={firstFieldRef}
+          // ref={firstFieldRef}
           defaultValue=''
         />
         <TextInput 
         value={lowval}
-        onChange={setlowval}
+        onChange={(e)=>setLowval(e.target.value)}
         label='Lowest Value'
         id='low'
         defaultValue='' />
@@ -110,17 +139,17 @@ const LineChartCard = ({lineChartDataDashboard,userid,designation}) => {
           </Flex>
           <Spacer />
 
-          <Flex height={"fit-content"} highval={highval} sethighval={setHighval} lowval={lowval} setlowval={setLowval}>
+          <Flex height={"fit-content"} >
           <Popover
         isOpen={isOpen}
-        initialFocusRef={firstFieldRef}
+        // initialFocusRef={firstFieldRef}
         onOpen={onOpen}
         onClose={onClose}
         placement='right'
-        closeOnBlur={false}
+        // closeOnBlur={false}
       >
         <PopoverTrigger>
-        <Icon onClick={()=>getxls()} as={FaBell} w='16px' h='16px' h='auto' me='15px' color='yellow' />
+        <Icon onClick={()=>{}} as={FaBell} w='16px' h='16px' h='auto' me='15px' color='yellow' />
         </PopoverTrigger>
         <PopoverContent p={5}>
           {/* <FocusLock returnFocus persistentFocus={false}> */}
@@ -138,9 +167,9 @@ const LineChartCard = ({lineChartDataDashboard,userid,designation}) => {
                     isChecked={addtohome}
                     onChange={(event) => {
                       if (addtohome === true) {
-                        setaddtohome(false);
+                        changeToHome(false);
                       } else {
-                        setaddtohome(true);
+                        changeToHome(true);
                       }
                     }}
                   />

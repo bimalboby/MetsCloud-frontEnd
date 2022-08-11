@@ -94,7 +94,7 @@ function SvTables() {
                   fontFamily="Plus Jakarta Display"
                   borderBottomColor="#56577A"
                 >
-                  Author
+                 Name
                 </Th>
                 {/* <Th
                   color='gray.400'
