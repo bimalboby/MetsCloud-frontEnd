@@ -55,6 +55,8 @@ import { usercontext } from "Hooks/Authcontext/Authcontext";
 import AddDevice from "Comp/Devices/AddDevice";
 import AddSensor from "Comp/Forms/AddSensor";
 import GetToken from "Comp/Forms/GetToken";
+import AlertForm from "Comp/Forms/AlertForm";
+import ReportForm from "Comp/Forms/ReportForm";
 
 
 export default function ADashboard(props) {
@@ -144,7 +146,7 @@ export default function ADashboard(props) {
     name: "Alert",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
-    component: null,
+    component: AlertForm,
     layout: "/admin",
   },
   {
@@ -152,7 +154,7 @@ export default function ADashboard(props) {
     name: "Report",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
-    component: null,
+    component: ReportForm,
     layout: "/admin",
   },
   // {

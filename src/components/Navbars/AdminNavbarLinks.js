@@ -46,6 +46,8 @@ import SvTables from "Comp/UserTable/SvTables";
 import UserDevices from "Comp/Devices/UserDevices";
 import { usercontext } from "Hooks/Authcontext/Authcontext";
 import GetToken from "Comp/Forms/GetToken";
+import AlertForm from "Comp/Forms/AlertForm";
+import ReportForm from "Comp/Forms/ReportForm";
 
 export default function HeaderLinks(props) {
   const { variant, children, fixed, secondary, onOpen, ...rest } = props;
@@ -152,7 +154,7 @@ export default function HeaderLinks(props) {
     name: "Alert",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
-    component: null,
+    component: AlertForm,
     layout: "/admin",
   },
   {
@@ -160,7 +162,7 @@ export default function HeaderLinks(props) {
     name: "Report",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
-    component: null,
+    component: ReportForm,
     layout: "/admin",
   }
 ]
