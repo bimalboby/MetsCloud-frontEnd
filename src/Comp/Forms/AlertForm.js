@@ -34,8 +34,13 @@ const AlertForm = () => {
         sensor:"",
         sms:"",
         phno:"",
-        email:""
+        email:"",
+        value:"",
+        aboveOrBelow: "",
+
     })
+
+    console.log(sensors);
 
     useEffect(async () => {
         const res = await Axios.post(`/get-devices?userid=${userid}&designation=${designation}`)
@@ -47,27 +52,28 @@ const AlertForm = () => {
             })
         }
         setDevices(arr)
-
-        console.log(res);
     }, [])
 
-    useEffect(async() => {
-      if(devices){
-        const res = await Axios.post(`/get-sensors?userid=${userid}&designation=${designation}`,{
-            device : details.device
+    useEffect(() => {
+      if(details.device){
+        console.log(details.device);
+        Axios.post(`/get-sensors?userid=${userid}&designation=${designation}&deviceid=${details.device}`).then((res)=>{
+            var arr = []
+            setSensors([])
+            console.log(res);
+            for (let i = 0; i < res.data.ids.length; i++) {
+                arr.push({
+                    id: res.data.ids[i],
+                    name: res.data.name[i]
+                })
+            }
+            setSensors(arr)
+        }).catch(err=>{
+            console.log(err);
         })
-        let arr = []
-        for (let i = 0; i < res.data.ids.length; i++) {
-            arr.push({
-                id: res.data.ids[i],
-                name: res.data.name[i]
-            })
-        }
-        setSensors(arr)
       }
-    }, [devices])
+    }, [details.device])
     
-
     const sumbit = async () => {
         const res = await Axios.post(`/submit-alert?userid=${userid}&designation=${designation}`, details)
         setResponse(res.data)
@@ -239,6 +245,81 @@ const AlertForm = () => {
                             ms='4px'
                             fontSize='sm'
                             fontWeight='normal'>
+                            Value
+                        </FormLabel>
+                        <GradientBorder
+                            mb='24px'
+                            h='50px'
+                            w={{ base: "100%", lg: "fit-content" }}
+                            borderRadius='20px'>
+                            <Input
+                                value={details.value}
+                                onChange={(e) => setDetails(pre => ({
+                                    ...pre,
+                                    value: e.target.value
+                                }))}
+                                color={titleColor}
+                                bg={{
+                                    base: "rgb(19,21,54)",
+                                }}
+                                border='transparent'
+                                borderRadius='20px'
+                                fontSize='sm'
+                                size='lg'
+                                w={{ base: "100%", md: "346px" }}
+                                maxW='100%'
+                                h='46px'
+                                type='email'
+                                placeholder='Value'
+                            />
+                        </GradientBorder>
+                        <FormLabel
+                        color={titleColor}
+                        ms='4px'
+                        fontSize='sm'
+                        fontWeight='normal'>
+                        Above/Below
+                    </FormLabel>
+                    <GradientBorder
+                        mb='24px'
+                        h='50px'
+                        w={{ base: "100%", lg: "fit-content" }}
+                        borderRadius='20px'>
+                    
+
+                                <Select
+                                    color={titleColor}
+                                    bg={{
+                                        base: "rgb(19,21,54)",
+                                    }}
+                                    // value={details.sensor}
+                                    onChange={(e) => setDetails(pre => ({
+                                        ...pre,
+                                        aboveOrBelow: e.target.value
+                                    }))}
+                                    placeholder='Select option'
+                                    border='transparent'
+                                    borderRadius='20px'
+                                    fontSize='sm'
+                                    size='lg'
+                                    w={{ base: "100%", md: "346px" }}
+                                    maxW='100%'
+                                    h='46px'>
+                                    
+                  
+                                            <option value='above'>Above</option>
+                                            <option value='below'>Below</option>
+                                            
+                                            
+                                     
+                                </Select>
+
+                    </GradientBorder>
+                        <FormLabel
+                            color={titleColor}
+                            ms='4px'
+                            fontSize='sm'
+                            fontWeight='normal'>
                             Email
                         </FormLabel>
                         <GradientBorder
@@ -267,6 +348,22 @@ const AlertForm = () => {
                                 placeholder='Email'
                             />
                         </GradientBorder>
+                        {
+                            (response.status == "success" ||  response.status == "error") && (
+                            <Text
+                                fontSize='xs'
+                                mb={5}
+                                ms={4}
+                                color={response?.status == "success" ? "green" : "red"}
+                                fontWeight='italics'>
+                                {
+                                    response.status == "success" ?
+                                        "Alert seted successfully" :
+                                        "Failed to set alert"
+                                }
+                            </Text>
+                        )
+                    }
                         <Button
                             onClick={() => sumbit()}
                             variant='brand'

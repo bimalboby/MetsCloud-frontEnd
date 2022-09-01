@@ -27,6 +27,7 @@ const SvCharts = ({id,designation}) => {
             <LineChartCard lineChartDataDashboard={chart} uid={id} designation={designation}/>
         ))
       }
+              {/* {charts.length>0 &&  <LineChartCard lineChartDataDashboard={charts[0]} uid={id} udesignation={designation}/> } */}
     </Grid>
   )
 };

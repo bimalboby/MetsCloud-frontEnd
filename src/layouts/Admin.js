@@ -125,15 +125,6 @@ export default function ADashboard(props) {
     layout: "/admin",
   },
   {
-    path: "/profile",
-    name: "Profile",
-    rtlName: "لوحة القيادة",
-    icon: <PersonIcon color='inherit' />,
-    secondaryNavbar: true,
-    component: Profile,
-    layout: "/admin",
-  },
-  {
     path: "/generateToken",
     name: "Tokens",
     rtlName: "لوحة القيادة",

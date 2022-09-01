@@ -116,8 +116,8 @@ export default function HeaderLinks(props) {
   //   layout: "/admin",
   // },
   {
-    path: "/tables",
-    name: "Add device",
+    path: "/device/add",
+    name: "Add devic",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
     component: Tables,
@@ -125,20 +125,11 @@ export default function HeaderLinks(props) {
   },
 
   {
-    path: "/tables",
+    path: "/sensor/add",
     name: "Add sensor",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color='inherit' />,
     component: Tables,
-    layout: "/admin",
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    rtlName: "لوحة القيادة",
-    icon: <PersonIcon color='inherit' />,
-    secondaryNavbar: true,
-    component: Profile,
     layout: "/admin",
   },
   {
@@ -279,9 +270,9 @@ export default function HeaderLinks(props) {
               <ItemContent
                 time='13 minutes ago'
                 info='from Alicia'
-                boldInfo='New Message'
+                boldInfo='Limit reached'
                 aName='Alicia'
-                aSrc={avatar1}
+                // aSrc={avatar1}
               />
             </MenuItem>
             <MenuItem
@@ -300,12 +291,12 @@ export default function HeaderLinks(props) {
               <ItemContent
                 time='2 days ago'
                 info='by Josh Henry'
-                boldInfo='New Album'
+                boldInfo='Alert Sent'
                 aName='Josh Henry'
-                aSrc={avatar2}
+                // aSrc={avatar2}
               />
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               borderRadius='8px'
               _hover={{
                 bg: "transparent",
@@ -323,7 +314,7 @@ export default function HeaderLinks(props) {
                 aName='Kara'
                 aSrc={avatar3}
               />
-            </MenuItem>
+            </MenuItem> */}
           </Flex>
         </MenuList>
       </Menu>

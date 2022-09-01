@@ -14,12 +14,15 @@ import {
     Input,
     Select,
     Button,
+    useDisclosure,
 } from "@chakra-ui/react";
 import GradientBorder from 'components/GradientBorder/GradientBorder';
 import { Link } from 'react-router-dom';
 import { FaApple, FaFacebook, FaGoogle } from 'react-icons/fa';
 import { usercontext } from 'Hooks/Authcontext/Authcontext';
 import Axios from 'Config/Axios/Axios';
+import DeviceTable from 'Comp/UserTable/DeviceTable/DeviceTable';
+
 
 const AddDevice = () => {
     const titleColor = "white";
@@ -88,7 +91,7 @@ const AddDevice = () => {
                             />
                         </GradientBorder>
                         {
-                        (response.status == "success" ||  response.status == "error") && (
+                            (response.status == "success" ||  response.status == "error") && (
                             <Text
                                 fontSize='xs'
                                 mb={5}
@@ -97,8 +100,8 @@ const AddDevice = () => {
                                 fontWeight='italics'>
                                 {
                                     response.status == "success" ?
-                                        "Success" :
-                                        "Serial number wrong"
+                                        "Device added successfully" :
+                                        "Failed to add device"
                                 }
                             </Text>
                         )
@@ -152,6 +155,8 @@ const AddDevice = () => {
                 </Flex>
             </GradientBorder>
             {/* </SimpleGrid> */}
+            <DeviceTable />
+            
         </Flex>
     )
 }

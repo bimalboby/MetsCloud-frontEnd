@@ -25,6 +25,7 @@ const GetToken = () => {
     const titleColor = "white";
     const textColor = "gray.400";
     const { userid, designation } = useContext(usercontext)
+    const [response, setResponse] = useState("")
 
     const [tokeninfo, setTokeninfo] = useState({
         email: "",
@@ -120,6 +121,22 @@ const GetToken = () => {
                             </Select>
 
                         </GradientBorder>
+                        {
+                            (response.status == "success" ||  response.status == "error") && (
+                            <Text
+                                fontSize='xs'
+                                mb={5}
+                                ms={4}
+                                color={response?.status == "success" ? "green" : "red"}
+                                fontWeight='italics'>
+                                {
+                                    response.status == "success" ?
+                                        "Token generated successfully" :
+                                        "Failed to generate token"
+                                }
+                            </Text>
+                        )
+                    }
                         <Button
                             onClick={() => sumbit()}
                             variant='brand'

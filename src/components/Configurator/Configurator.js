@@ -73,6 +73,8 @@ export default function Configurator(props) {
           </DrawerHeader>
           <DrawerBody w='340px' ps='24px' pe='40px'>
             <Flex flexDirection='column'>
+             
+             
               <Box
                 display={fixedDisplay}
                 justifyContent='space-between '
@@ -96,6 +98,54 @@ export default function Configurator(props) {
                   />
                 </DarkMode>
               </Box>
+              {/* 
+              <Button
+              boxSize='initial'
+              justifyContent='flex-start'
+              alignItems='center'
+              bg='transparent'
+              mb={{
+                xl: "12px",
+              }}
+              mx={{
+                xl: "auto",
+              }}
+              py='12px'
+              ps={{
+                sm: "10px",
+                xl: "16px",
+              }}
+              borderRadius='15px'
+              _hover='none'
+              w='100%'
+              _active={{
+                bg: "inherit",
+                transform: "none",
+                borderColor: "transparent",
+              }}
+              _focus={{
+                boxShadow: "none",
+              }}>
+              <Flex>
+                {typeof prop.icon === "string" ? (
+                  <Icon>{prop.icon}</Icon>
+                ) : (
+                  <IconBox
+                    bg={inactiveBg}
+                    color='brand.200'
+                    h='30px'
+                    w='30px'
+                    me='12px'>
+                    {prop.icon}
+                  </IconBox>
+                )}
+                <Text color={inactiveColor} my='auto' fontSize='sm'>
+                  {document.documentElement.dir === "rtl"
+                    ? prop.rtlName
+                    : prop.name}
+                </Text>
+              </Flex>
+            </Button> */}
             </Flex>
           </DrawerBody>
         </DrawerContent>

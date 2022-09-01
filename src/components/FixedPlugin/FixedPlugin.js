@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-
+import { DragHandleIcon } from '@chakra-ui/icons'
 // Chakra Imports
 import { Button, useColorModeValue } from "@chakra-ui/react";
 // Custom Icons
@@ -47,12 +47,19 @@ export default function FixedPlugin(props) {
         bottom='30px'
         borderRadius='50px'
         boxShadow='0 2px 12px 0 rgb(0 0 0 / 16%)'>
-        <SettingsIcon
+        {/* <SettingsIcon
           cursor='pointer'
           ref={settingsRef}
           color={navbarIcon}
           w='20px'
           h='20px'
+        /> */}
+        <DragHandleIcon
+        cursor='pointer'
+        ref={settingsRef}
+        color={navbarIcon}
+        w='20px'
+        h='20px'
         />
       </Button>
     </>

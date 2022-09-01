@@ -9,7 +9,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FaBell, FaFileExcel, FaFilePdf, FaRegBell } from 'react-icons/fa'
 import download from 'js-file-download';
 
-const LineChartCard = ({lineChartDataDashboard,uid,udesignation}) => {
+const LineChartCard = ({lineChartDataDashboard,uid,udesignation }) => {
   const [chartdata, setChartdata] = useState(lineChartDataDashboard)
   const [addtohome, setaddtohome] = useState(false)
   const [ltimer, setlTimer] = useState(0)
@@ -20,13 +20,12 @@ const LineChartCard = ({lineChartDataDashboard,uid,udesignation}) => {
   const [lowval, setLowval] = useState("")
 
   useEffect(() => {
-    console.log("dsgdgdfgdfg");
+    console.log(lineChartDataDashboard,uid,udesignation);
     const aaaa = setInterval(async()=>{
         const res = await Axios.post(`/iiot-chart-data?id=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`)
         console.log(res.data);
         setChartdata(res.data)
-        setlTimer(2000)
-    },20000)
+    },2000)
     return ()=>{
       clearInterval(aaaa)
     }
@@ -73,11 +72,12 @@ const LineChartCard = ({lineChartDataDashboard,uid,udesignation}) => {
   const getxls = async() => {
     Axios.get(`/iiot-report-xls?chartId=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`,{responseType:"blob"})
      .then(resp => {
-            download(resp.data,`${lineChartDataDashboard}-${Date.now().toString()}.xls`);
+            download(resp.data,`${lineChartDataDashboard}-${Date.now().toString()}.xlsx`);
      });
   }
 
   const getpdf = async() => {
+    console.log(udesignation);
     Axios.get(`/iiot-report-pdf?chartId=${lineChartDataDashboard}&userid=${uid}&designation=${udesignation}`,{responseType:"blob"})
      .then(resp => {
             download(resp.data,`${lineChartDataDashboard}-${Date.now().toString()}.pdf`);
@@ -134,7 +134,7 @@ const LineChartCard = ({lineChartDataDashboard,uid,udesignation}) => {
               <Text as="span" color="green.400" fontWeight="bold">
                 (+5%) more
               </Text>{" "}
-              in 2021
+             Today
             </Text>
           </Flex>
           <Spacer />
@@ -159,8 +159,8 @@ const LineChartCard = ({lineChartDataDashboard,uid,udesignation}) => {
           {/* </FocusLock> */}
         </PopoverContent>
       </Popover>
-          <Icon onClick={()=>getxls()} as={FaFileExcel} w='16px' h='16px' h='auto' me='15px' color='green' />
-          <Icon onClick={()=>getpdf()} as={FaFilePdf} w='16px' h='16px' h='auto' me='15px' color='#ff6464' />
+          <Icon onClick={()=>getxls()} as={FaFileExcel} w='16px' h='16px' me='15px' color='green' />
+          <Icon onClick={()=>getpdf()} as={FaFilePdf} w='16px' h='16px'  me='15px' color='#ff6464' />
           <Switch
                   mr={10}
                     colorScheme='brand'

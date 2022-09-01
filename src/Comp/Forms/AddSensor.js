@@ -21,6 +21,7 @@ import { FaApple, FaFacebook, FaGoogle } from 'react-icons/fa';
 import { usercontext } from 'Hooks/Authcontext/Authcontext';
 import Axios from 'Config/Axios/Axios';
 import { Spinner } from '@chakra-ui/react'
+import SensorTable from 'Comp/UserTable/SensorTable/SensorTable';
 const AddSensor = () => {
     const titleColor = "white";
     const textColor = "gray.400";
@@ -232,6 +233,22 @@ const AddSensor = () => {
 
                             </Select>
                         </GradientBorder>
+                        {
+                            (response.status == "success" ||  response.status == "error") && (
+                            <Text
+                                fontSize='xs'
+                                mb={5}
+                                ms={4}
+                                color={response?.status == "success" ? "green" : "red"}
+                                fontWeight='italics'>
+                                {
+                                    response.status == "success" ?
+                                        "Sensor added successfully" :
+                                        "Failed to add sensor"
+                                }
+                            </Text>
+                        )
+                    }
                         <Button
                             onClick={() => sumbit()}
                             variant='brand'
@@ -249,6 +266,7 @@ const AddSensor = () => {
                 </Flex>
             </GradientBorder>
             {/* </SimpleGrid> */}
+            <SensorTable />
         </Flex>
     )
 }

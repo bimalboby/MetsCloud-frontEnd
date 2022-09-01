@@ -86,10 +86,12 @@ import LineChartCard from "Comp/Charts/LineChartCard/LineChartCard";
 
 export default function Dashboard() {
   const { userdetails ,inhomeGraphs,userid,designation} = useContext(usercontext)
+  console.log(userid);
 
+  console.log(inhomeGraphs);
 
   useEffect(() => {
-    
+    // console.log(inhomeGraphs);
   }, [])
   
   return (
@@ -260,14 +262,14 @@ export default function Dashboard() {
     >
       {
         inhomeGraphs.map((chart)=>(
-            <LineChartCard lineChartDataDashboard={chart} userid={userid} designation={designation}/>
+            <LineChartCard lineChartDataDashboard={chart} uid={userid} udesignation={designation}/>
         ))
       }
     </Grid>
       <Grid
         templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }}
         gap='24px'>
-        <Card
+        {/* <Card
           p='22px'
           // my={{ sm: "24px", lg: "0px" }}
           // ms={{ sm: "0px", lg: "24px" }}
@@ -306,7 +308,7 @@ export default function Dashboard() {
               })}
             </Flex>
           </CardBody>
-        </Card>
+        </Card> */}
       </Grid>
     </Flex>
   );

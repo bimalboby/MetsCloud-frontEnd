@@ -52,9 +52,7 @@ const ReportForm = () => {
 
     useEffect(async() => {
       if(devices){
-        const res = await Axios.post(`/get-sensors?userid=${userid}&designation=${designation}`,{
-            device : details.device
-        })
+        const res = await Axios.post(`/get-sensors?userid=${userid}&designation=${designation}&deviceid=${details.device}`)
         let arr = []
         for (let i = 0; i < res.data.ids.length; i++) {
             arr.push({
@@ -64,7 +62,7 @@ const ReportForm = () => {
         }
         setSensors(arr)
       }
-    }, [devices])
+    }, [details.device])
     
 
     const sumbit = () => {
